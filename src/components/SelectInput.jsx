@@ -14,7 +14,7 @@ export default function SelectInput({
         <div>
             <label className="font-semibold uppercase text-sm">{label}</label>
             <select
-                defaultValue={defaultValue}
+                value={defaultValue || ""}
                 className="w-full py-1 px-2 border border-gray-300 rounded"
                 onChange={handleSelectChange}
             >

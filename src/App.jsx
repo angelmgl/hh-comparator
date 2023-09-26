@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Accordeon from "./components/Accordeon";
 import Card from "./components/Card";
 import SelectInput from "./components/SelectInput";
@@ -14,7 +14,6 @@ export default function App() {
     const {
         properties,
         filteredProperties,
-        setFilteredProperties,
         filters,
         setFilters,
         operationTypeOptions,
@@ -22,6 +21,15 @@ export default function App() {
         zoneOptions,
         localityOptions,
     } = useProperties();
+
+    useEffect(() => {
+        setCurrentProperties({
+            first: null,
+            second: null,
+            third: null,
+            fourth: null,
+        });
+    }, [filters]);
 
     const getCurrentPropertyData = (key) => {
         return properties.filter(
@@ -95,10 +103,26 @@ export default function App() {
                         />
                     </div>
                     <div className="mt-4 grid grid-cols-4 gap-4">
-                        <Card property={getCurrentPropertyData("first")} />
-                        <Card property={getCurrentPropertyData("second")} />
-                        <Card property={getCurrentPropertyData("third")} />
-                        <Card property={getCurrentPropertyData("fourth")} />
+                        <Card
+                            property={getCurrentPropertyData("first")}
+                            handleChange={changeCurrentProperty}
+                            field="first"
+                        />
+                        <Card
+                            property={getCurrentPropertyData("second")}
+                            handleChange={changeCurrentProperty}
+                            field="second"
+                        />
+                        <Card
+                            property={getCurrentPropertyData("third")}
+                            handleChange={changeCurrentProperty}
+                            field="third"
+                        />
+                        <Card
+                            property={getCurrentPropertyData("fourth")}
+                            handleChange={changeCurrentProperty}
+                            field="fourth"
+                        />
                     </div>
                 </div>
             </div>

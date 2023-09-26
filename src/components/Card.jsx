@@ -1,15 +1,22 @@
 /* eslint-disable react/prop-types */
 
-export default function Card({ property }) {
+export default function Card({ property, handleChange, field }) {
     if (property) {
         return (
             <div className="border border-gray-300 rounded-lg overflow-hidden">
                 <div
-                    className="min-h-[220px] bg-center bg-cover bg-no-repeat"
+                    className="min-h-[220px] bg-center bg-cover bg-no-repeat relative"
                     style={{
                         backgroundImage: `url(${property.thumbnail})`,
                     }}
-                ></div>
+                >
+                    <span
+                        className="flex justify-center items-center h-5 w-5 bg-red-600 hover:bg-red-700 text-white cursor-pointer"
+                        onClick={() => handleChange(field, null)}
+                    >
+                        x
+                    </span>
+                </div>
                 <div className="p-3">
                     <h2 className="text-xl font-semibold text-center">
                         {property.title}
