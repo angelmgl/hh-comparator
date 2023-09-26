@@ -167,3 +167,6 @@ export function matchesFilter(property, filters) {
     return true; // Si pasa todos los filtros, devolvemos true.
 }
 
+export function getClassNames(condition, conditionalClass, defaultClasses) {
+    return condition ? `${conditionalClass} ${defaultClasses}` : defaultClasses;
+}

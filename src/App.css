@@ -1,0 +1,17 @@
+.not-yet::after {
+    content: "Selecciona un tipo de propiedad primero...";
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    font-size: 22px;
+    font-weight: 600;
+    background: rgba(240,35,0, 0.35);
+    border: 3px dashed tomato;
+    border-radius: 10px;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

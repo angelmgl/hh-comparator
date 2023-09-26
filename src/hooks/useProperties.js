@@ -86,6 +86,15 @@ export default function useProperties() {
         }
     }, [filters.zone, localities]);
 
+    const changeFilters = (key, value) => {
+        setFilters((prev) => {
+            return {
+                ...prev,
+                [key]: value,
+            };
+        });
+    };
+
     return {
         properties,
         loading,
@@ -93,7 +102,7 @@ export default function useProperties() {
         filteredProperties,
         setFilteredProperties,
         filters,
-        setFilters,
+        changeFilters,
         propertyTypeOptions,
         operationTypeOptions,
         zoneOptions,

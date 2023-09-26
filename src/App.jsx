@@ -3,19 +3,20 @@ import Accordeon from "./components/Accordeon";
 import Card from "./components/Card";
 import SelectInput from "./components/SelectInput";
 import useProperties from "./hooks/useProperties";
+import useComparator from "./hooks/useComparator";
+import "./App.css";
+import { getClassNames } from "./helpers";
 
 export default function App() {
-    const [currentProperties, setCurrentProperties] = useState({
-        first: null,
-        second: null,
-        third: null,
-        fourth: null,
-    });
+    const [currentPropertyType, setCurrentPropertyType] = useState("");
+    const { currentProperties, setCurrentProperties } =
+        useComparator(currentPropertyType);
+
     const {
         properties,
         filteredProperties,
         filters,
-        setFilters,
+        changeFilters,
         operationTypeOptions,
         propertyTypeOptions,
         zoneOptions,
@@ -29,6 +30,7 @@ export default function App() {
             third: null,
             fourth: null,
         });
+        setCurrentPropertyType(filters.propertyType);
     }, [filters]);
 
     const getCurrentPropertyData = (key) => {
@@ -39,15 +41,6 @@ export default function App() {
 
     const changeCurrentProperty = (key, value) => {
         setCurrentProperties((prev) => {
-            return {
-                ...prev,
-                [key]: value,
-            };
-        });
-    };
-
-    const changeFilters = (key, value) => {
-        setFilters((prev) => {
             return {
                 ...prev,
                 [key]: value,
@@ -66,7 +59,13 @@ export default function App() {
                     zoneOptions={zoneOptions}
                     localOptions={localityOptions}
                 />
-                <div className="py-12 md:py-20">
+                <div
+                    className={getClassNames(
+                        !filters.propertyType,
+                        "not-yet",
+                        "my-12 md:my-20 relative"
+                    )}
+                >
                     <h2 className="text-3xl font-semibold">Inmuebles</h2>
                     <div className="mt-4 grid grid-cols-4 gap-4">
                         <SelectInput
