@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Accordeon from "./components/Accordeon";
 import Card from "./components/Card";
 import SelectInput from "./components/SelectInput";
@@ -11,18 +11,17 @@ export default function App() {
         third: null,
         fourth: null,
     });
-    const { properties } = useProperties();
-    const [options, setOptions] = useState([]);
-
-    useEffect(() => {
-        const filteredOptions = properties.map((property) => {
-            return {
-                label: property.title,
-                value: property.code,
-            };
-        });
-        setOptions(filteredOptions);
-    }, [properties])
+    const {
+        properties,
+        filteredProperties,
+        setFilteredProperties,
+        filters,
+        setFilters,
+        operationTypeOptions,
+        propertyTypeOptions,
+        zoneOptions,
+        localityOptions,
+    } = useProperties();
 
     const getCurrentPropertyData = (key) => {
         return properties.filter(
@@ -34,22 +33,38 @@ export default function App() {
         setCurrentProperties((prev) => {
             return {
                 ...prev,
-                [key]: value
-            }
-        })
-    }
+                [key]: value,
+            };
+        });
+    };
+
+    const changeFilters = (key, value) => {
+        setFilters((prev) => {
+            return {
+                ...prev,
+                [key]: value,
+            };
+        });
+    };
 
     return (
         <main className="py-12 md:py-20">
             <div className="custom-container">
-                <Accordeon />
+                <Accordeon
+                    filters={filters}
+                    changeFilters={changeFilters}
+                    propertyTypeOptions={propertyTypeOptions}
+                    operationTypeOptions={operationTypeOptions}
+                    zoneOptions={zoneOptions}
+                    localOptions={localityOptions}
+                />
                 <div className="py-12 md:py-20">
                     <h2 className="text-3xl font-semibold">Inmuebles</h2>
                     <div className="mt-4 grid grid-cols-4 gap-4">
                         <SelectInput
                             label="Propiedad 1"
                             placeholder="Selecciona una propiedad..."
-                            options={options}
+                            options={filteredProperties}
                             defaultValue={currentProperties.first}
                             handleChange={changeCurrentProperty}
                             field="first"
@@ -57,7 +72,7 @@ export default function App() {
                         <SelectInput
                             label="Propiedad 2"
                             placeholder="Selecciona una propiedad..."
-                            options={options}
+                            options={filteredProperties}
                             defaultValue={currentProperties.second}
                             handleChange={changeCurrentProperty}
                             field="second"
@@ -65,7 +80,7 @@ export default function App() {
                         <SelectInput
                             label="Propiedad 3"
                             placeholder="Selecciona una propiedad..."
-                            options={options}
+                            options={filteredProperties}
                             defaultValue={currentProperties.third}
                             handleChange={changeCurrentProperty}
                             field="third"
@@ -73,7 +88,7 @@ export default function App() {
                         <SelectInput
                             label="Propiedad 4"
                             placeholder="Selecciona una propiedad..."
-                            options={options}
+                            options={filteredProperties}
                             defaultValue={currentProperties.fourth}
                             handleChange={changeCurrentProperty}
                             field="fourth"

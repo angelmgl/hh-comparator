@@ -18,8 +18,8 @@ export default function SelectInput({
                 className="w-full py-1 px-2 border border-gray-300 rounded"
                 onChange={handleSelectChange}
             >
-                <option>{placeholder}</option>
-                {options.map((option) => (
+                <option value="">{placeholder}</option>
+                {options?.map((option) => (
                     <option key={option.value} value={option.value}>
                         {option.label}
                     </option>
