@@ -1,5 +1,5 @@
 .not-yet::after {
-    content: "Selecciona un tipo de propiedad primero...";
+    content: "Selecciona un tipo de propiedad y un tipo de operación primero...";
     height: 100%;
     width: 100%;
     position: absolute;

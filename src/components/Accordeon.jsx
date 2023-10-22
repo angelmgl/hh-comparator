@@ -33,7 +33,7 @@ export default function Accordeon({
                         field="propertyType"
                     />
                     <SelectInput
-                        label="Tipo de operación"
+                        label="Tipo de operación *"
                         placeholder="Selecciona un tipo de operación..."
                         options={operationTypeOptions}
                         defaultValue={filters.operationType}

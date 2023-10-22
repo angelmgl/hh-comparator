@@ -1,26 +1,31 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { getTheCheapest } from "../../comparators";
 
-export default function useComparator(currentPropertyType) {
+export default function useComparator(properties, filters) {
     const [currentProperties, setCurrentProperties] = useState({
         first: null,
         second: null,
         third: null,
         fourth: null,
     }); 
-    const [cheapestSale, setCheapestSale] = useState(null);
+    const [hasTwoOrMoreValues, setHasTwoOrMoreValues] = useState(false);
+    const [cheapest, setCheapest] = useState(null);
 
-    function hasTwoOrMoreValues() {
+    useEffect(() => {
+        setCheapest(getTheCheapest(hasTwoOrMoreValues, properties, currentProperties, filters.operationType));
+    }, [currentProperties, hasTwoOrMoreValues, properties, filters])
+
+    useEffect(() => {
         const values = Object.values(currentProperties);
         const countNonNull = values.filter(value => value !== null).length;
-    
-        return countNonNull >= 2;
-    }
+
+        setHasTwoOrMoreValues(countNonNull >= 2);
+    }, [currentProperties])
 
     return {
         currentProperties,
         setCurrentProperties,
-        cheapestSale, 
-        setCheapestSale,
+        cheapest,
         hasTwoOrMoreValues
     }
 }

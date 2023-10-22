@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Accordeon from "./components/Accordeon";
 import Card from "./components/Card";
 import SelectInput from "./components/SelectInput";
@@ -8,15 +8,6 @@ import "./App.css";
 import { getClassNames } from "./helpers";
 
 export default function App() {
-    const [currentPropertyType, setCurrentPropertyType] = useState("");
-    const {
-        currentProperties,
-        setCurrentProperties,
-        hasTwoOrMoreValues,
-        cheapestSale,
-        setCheapestSale,
-    } = useComparator(currentPropertyType);
-
     const {
         properties,
         filteredProperties,
@@ -28,6 +19,12 @@ export default function App() {
         localityOptions,
     } = useProperties();
 
+    const {
+        currentProperties,
+        setCurrentProperties,
+        cheapest
+    } = useComparator(properties, filters);
+
     useEffect(() => {
         setCurrentProperties({
             first: null,
@@ -35,8 +32,7 @@ export default function App() {
             third: null,
             fourth: null,
         });
-        setCurrentPropertyType(filters.propertyType);
-    }, [filters]);
+    }, [filters, setCurrentProperties]);
 
     const getCurrentPropertyData = (key) => {
         return properties.filter(
@@ -53,42 +49,6 @@ export default function App() {
         });
     };
 
-    const getTheSaleCheapest = () => {
-        if (hasTwoOrMoreValues()) {
-            const firstProperty = properties.filter(
-                (property) => property.code == currentProperties.first
-            )[0];
-            const secondProperty = properties.filter(
-                (property) => property.code == currentProperties.second
-            )[0];
-            const thirdProperty = properties.filter(
-                (property) => property.code == currentProperties.third
-            )[0];
-            const fourthProperty = properties.filter(
-                (property) => property.code == currentProperties.fourth
-            )[0];
-
-            const fullProperties = [
-                firstProperty,
-                secondProperty,
-                thirdProperty,
-                fourthProperty,
-            ];
-
-            console.log(fullProperties);
-
-            let xcheapest =  fullProperties.reduce((cheapest, currentProperty) => {
-                return currentProperty.salePriceUSD < cheapest.salePriceUSD
-                    ? currentProperty
-                    : cheapest;
-            });
-            console.log(xcheapest);
-        } else {
-            console.log("no");
-            return null;
-        }
-    };
-
     return (
         <main className="py-12 md:py-20">
             <div className="custom-container">
@@ -102,7 +62,7 @@ export default function App() {
                 />
                 <div
                     className={getClassNames(
-                        !filters.propertyType,
+                        !filters.propertyType || !filters.operationType,
                         "not-yet",
                         "my-12 md:my-20 relative"
                     )}
@@ -147,21 +107,25 @@ export default function App() {
                             property={getCurrentPropertyData("first")}
                             handleChange={changeCurrentProperty}
                             field="first"
+                            cheapest={cheapest}
                         />
                         <Card
                             property={getCurrentPropertyData("second")}
                             handleChange={changeCurrentProperty}
                             field="second"
+                            cheapest={cheapest}
                         />
                         <Card
                             property={getCurrentPropertyData("third")}
                             handleChange={changeCurrentProperty}
                             field="third"
+                            cheapest={cheapest}
                         />
                         <Card
                             property={getCurrentPropertyData("fourth")}
                             handleChange={changeCurrentProperty}
                             field="fourth"
+                            cheapest={cheapest}
                         />
                     </div>
                 </div>

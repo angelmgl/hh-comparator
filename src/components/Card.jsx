@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 
-export default function Card({ property, handleChange, field }) {
+export default function Card({ property, handleChange, field, cheapest }) {
     if (property) {
         return (
             <div className="border border-gray-300 rounded-lg overflow-hidden">
@@ -24,6 +24,9 @@ export default function Card({ property, handleChange, field }) {
                     <p className="mt-2">
                         <strong>Precio:</strong>&nbsp;
                         <span>USD {property.salePriceUSD}</span>
+                        {
+                            cheapest === property.code ? "el más barato" : ""
+                        }
                     </p>
                     <p className="mt-2">
                         <strong>Zona:</strong>&nbsp;
