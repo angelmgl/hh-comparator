@@ -7,9 +7,10 @@ export default function useComparator(currentPropertyType) {
         third: null,
         fourth: null,
     }); 
+    const [cheapestSale, setCheapestSale] = useState(null);
 
-    function hasTwoOrMoreValues(properties) {
-        const values = Object.values(properties);
+    function hasTwoOrMoreValues() {
+        const values = Object.values(currentProperties);
         const countNonNull = values.filter(value => value !== null).length;
     
         return countNonNull >= 2;
@@ -17,6 +18,9 @@ export default function useComparator(currentPropertyType) {
 
     return {
         currentProperties,
-        setCurrentProperties
+        setCurrentProperties,
+        cheapestSale, 
+        setCheapestSale,
+        hasTwoOrMoreValues
     }
 }

@@ -1,3 +1,9 @@
+function formatNumber(number) {
+    let int = parseInt(number);
+
+    return int ? int : null;
+}
+
 export function mapProperties(properties) {
     let mappedProperties = properties.map((item) => {
         return {
@@ -13,10 +19,10 @@ export function mapProperties(properties) {
             },
             operationType: item.tipo_operacion,
             propertyType: item.tipo_propiedad,
-            salePriceUSD: item.precio_venta_usd,
-            salePriceGS: item.precio_venta_gs,
-            rentPriceUSD: item.precio_alquiler_usd,
-            rentPriceGS: item.precio_alquiler_gs,
+            salePriceUSD: formatNumber(item.precio_venta_usd),
+            salePriceGS: formatNumber(item.precio_venta_gs),
+            rentPriceUSD: formatNumber(item.precio_alquiler_usd),
+            rentPriceGS: formatNumber(item.precio_alquiler_gs),
             dimensions: item.dimensiones,
             rooms: item.cantidad_de_habitaciones,
             bathrooms: item.cantidad_de_banos,

@@ -7,7 +7,7 @@ export default function Accordeon({
     propertyTypeOptions,
     operationTypeOptions,
     zoneOptions,
-    localOptions
+    localOptions,
 }) {
     const [isOpen, setIsOpen] = useState(false);
 
@@ -24,7 +24,15 @@ export default function Accordeon({
             </div>
             {isOpen && (
                 <div className="border-l border-r border-b border-gray-300 p-4 rounded mt-4 grid grid-cols-4 gap-4">
-                    <SelectInput 
+                    <SelectInput
+                        label="Tipo de propiedad *"
+                        placeholder="Selecciona un tipo de propiedad..."
+                        options={propertyTypeOptions}
+                        defaultValue={filters.propertyType}
+                        handleChange={changeFilters}
+                        field="propertyType"
+                    />
+                    <SelectInput
                         label="Tipo de operación"
                         placeholder="Selecciona un tipo de operación..."
                         options={operationTypeOptions}
@@ -32,15 +40,7 @@ export default function Accordeon({
                         handleChange={changeFilters}
                         field="operationType"
                     />
-                    <SelectInput 
-                        label="Tipo de propiedad"
-                        placeholder="Selecciona un tipo de propiedad..."
-                        options={propertyTypeOptions}
-                        defaultValue={filters.propertyType}
-                        handleChange={changeFilters}
-                        field="propertyType"
-                    />
-                    <SelectInput 
+                    <SelectInput
                         label="Zona"
                         placeholder="Selecciona una zona..."
                         options={zoneOptions}
@@ -48,7 +48,7 @@ export default function Accordeon({
                         handleChange={changeFilters}
                         field="zone"
                     />
-                    <SelectInput 
+                    <SelectInput
                         label="Localidad"
                         placeholder="Selecciona una localidad..."
                         options={localOptions}

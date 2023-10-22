@@ -9,8 +9,13 @@ import { getClassNames } from "./helpers";
 
 export default function App() {
     const [currentPropertyType, setCurrentPropertyType] = useState("");
-    const { currentProperties, setCurrentProperties } =
-        useComparator(currentPropertyType);
+    const {
+        currentProperties,
+        setCurrentProperties,
+        hasTwoOrMoreValues,
+        cheapestSale,
+        setCheapestSale,
+    } = useComparator(currentPropertyType);
 
     const {
         properties,
@@ -46,6 +51,42 @@ export default function App() {
                 [key]: value,
             };
         });
+    };
+
+    const getTheSaleCheapest = () => {
+        if (hasTwoOrMoreValues()) {
+            const firstProperty = properties.filter(
+                (property) => property.code == currentProperties.first
+            )[0];
+            const secondProperty = properties.filter(
+                (property) => property.code == currentProperties.second
+            )[0];
+            const thirdProperty = properties.filter(
+                (property) => property.code == currentProperties.third
+            )[0];
+            const fourthProperty = properties.filter(
+                (property) => property.code == currentProperties.fourth
+            )[0];
+
+            const fullProperties = [
+                firstProperty,
+                secondProperty,
+                thirdProperty,
+                fourthProperty,
+            ];
+
+            console.log(fullProperties);
+
+            let xcheapest =  fullProperties.reduce((cheapest, currentProperty) => {
+                return currentProperty.salePriceUSD < cheapest.salePriceUSD
+                    ? currentProperty
+                    : cheapest;
+            });
+            console.log(xcheapest);
+        } else {
+            console.log("no");
+            return null;
+        }
     };
 
     return (
