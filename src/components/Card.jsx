@@ -11,7 +11,8 @@ export default function Card({
     filters,
 }) {
     const {
-        cheapest,
+        cheapestSale,
+        cheapestRent,
         mostBuilded,
         mostLand,
         mostOwned,
@@ -26,10 +27,6 @@ export default function Card({
     const { operationType } = filters;
 
     if (property) {
-        const finalPrice = property.salePriceUSD
-            ? property.salePriceUSD.toLocaleString()
-            : property.rentPriceUSD.toLocaleString();
-
         return (
             <div className="border border-gray-300 rounded-lg overflow-hidden">
                 <div
@@ -53,11 +50,29 @@ export default function Card({
                         {property.title}
                     </h2>
 
-                    {/* precio */}
-                    <Field condition={cheapest === property.code}>
-                        <CiBadgeDollar />
-                        <span className="mx-2">USD {finalPrice}</span>
-                    </Field>
+                    {/* precio venta */}
+                    {(operationType === "Venta" ||
+                        operationType === "Venta/Alquiler") &&
+                        property.salePriceUSD && (
+                            <Field condition={cheapestSale === property.code}>
+                                <CiBadgeDollar />
+                                <span className="mx-2">
+                                    USD {property.salePriceUSD.toLocaleString()}
+                                </span>
+                            </Field>
+                        )}
+
+                    {/* precio alquiler */}
+                    {(operationType === "Alquiler" ||
+                        operationType === "Venta/Alquiler") &&
+                        property.rentPriceUSD && (
+                            <Field condition={cheapestRent === property.code}>
+                                <CiBadgeDollar />
+                                <span className="mx-2">
+                                    USD {property.rentPriceUSD.toLocaleString()} al mes
+                                </span>
+                            </Field>
+                        )}
 
                     {/* ubicación */}
                     <Field condition={false}>

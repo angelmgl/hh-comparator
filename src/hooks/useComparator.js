@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { 
-    getTheCheapest,
+    getTheCheapestSale,
+    getTheCheapestRent,
     getTheMostBuilded, 
     getTheMostLand, 
     getTheMostOwned, 
@@ -20,7 +21,8 @@ export default function useComparator(properties, filters) {
         fourth: null,
     }); 
     const [hasTwoOrMoreValues, setHasTwoOrMoreValues] = useState(false);
-    const [cheapest, setCheapest] = useState(null);
+    const [cheapestSale, setCheapestSale] = useState(null);
+    const [cheapestRent, setCheapestRent] = useState(null);
     const [mostBuilded, setMostBuilded] = useState(null);
     const [mostLand, setMostLand] = useState(null);
     const [mostOwned, setMostOwned] = useState(null);
@@ -33,7 +35,8 @@ export default function useComparator(properties, filters) {
 
 
     useEffect(() => {
-        setCheapest(getTheCheapest(hasTwoOrMoreValues, properties, currentProperties, filters.operationType));
+        setCheapestSale(getTheCheapestSale(hasTwoOrMoreValues, properties, currentProperties, filters.operationType));
+        setCheapestRent(getTheCheapestRent(hasTwoOrMoreValues, properties, currentProperties, filters.operationType));
         setMostBuilded(getTheMostBuilded(hasTwoOrMoreValues, properties, currentProperties))
         setMostLand(getTheMostLand(hasTwoOrMoreValues, properties, currentProperties))
         setMostOwned(getTheMostOwned(hasTwoOrMoreValues, properties, currentProperties))
@@ -55,7 +58,8 @@ export default function useComparator(properties, filters) {
     return {
         currentProperties,
         setCurrentProperties,
-        cheapest,
+        cheapestSale,
+        cheapestRent,
         mostBuilded,
         mostLand,
         mostOwned,

@@ -6,6 +6,21 @@ import useProperties from "./hooks/useProperties";
 import useComparator from "./hooks/useComparator";
 import "./App.css";
 import { getClassNames } from "./helpers";
+import html2pdf from "html2pdf.js";
+
+function downloadPDF() {
+    var element = document.getElementById("content");
+    var opt = {
+        margin: 4,
+        filename: "documento.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 5 },
+        jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+    };
+
+    // New Promise-based usage:
+    html2pdf().from(element).set(opt).save();
+}
 
 export default function App() {
     const {
@@ -22,7 +37,8 @@ export default function App() {
     const {
         currentProperties,
         setCurrentProperties,
-        cheapest,
+        cheapestSale,
+        cheapestRent,
         mostBuilded,
         mostLand,
         mostOwned,
@@ -70,6 +86,7 @@ export default function App() {
                     localOptions={localityOptions}
                 />
                 <div
+                    id="content"
                     className={getClassNames(
                         !filters.propertyType || !filters.operationType,
                         "not-yet",
@@ -117,7 +134,8 @@ export default function App() {
                             handleChange={changeCurrentProperty}
                             field="first"
                             bestProperties={{
-                                cheapest,
+                                cheapestSale,
+                                cheapestRent,
                                 mostBuilded,
                                 mostLand,
                                 mostOwned,
@@ -135,7 +153,8 @@ export default function App() {
                             handleChange={changeCurrentProperty}
                             field="second"
                             bestProperties={{
-                                cheapest,
+                                cheapestSale,
+                                cheapestRent,
                                 mostBuilded,
                                 mostLand,
                                 mostOwned,
@@ -153,7 +172,8 @@ export default function App() {
                             handleChange={changeCurrentProperty}
                             field="third"
                             bestProperties={{
-                                cheapest,
+                                cheapestSale,
+                                cheapestRent,
                                 mostBuilded,
                                 mostLand,
                                 mostOwned,
@@ -171,7 +191,8 @@ export default function App() {
                             handleChange={changeCurrentProperty}
                             field="fourth"
                             bestProperties={{
-                                cheapest,
+                                cheapestSale,
+                                cheapestRent,
                                 mostBuilded,
                                 mostLand,
                                 mostOwned,
@@ -185,6 +206,9 @@ export default function App() {
                             filters={filters}
                         />
                     </div>
+                </div>
+                <div>
+                    <button className="text-white uppercase bg-black hover:bg-gray-700 px-4 py-2 font-medium text-sm" onClick={downloadPDF}>Descargar</button>
                 </div>
             </div>
         </main>
