@@ -1,19 +1,14 @@
 /* eslint-disable react/prop-types */
 import {
-    CiCircleChevUp,
     CiBadgeDollar,
     CiLocationOn,
     CiRuler,
 } from "react-icons/ci";
-import { FiX } from "react-icons/fi";
+import { FiX, FiChevronsUp } from "react-icons/fi";
 
-function Signal({ text }) {
-    return (
-        <span className="bg-green-300 text-white px-2 rounded text-xs flex items-center">
-            <CiCircleChevUp className="mr-1" /> {text}
-        </span>
-    );
-}
+function classNames(condition, classesIfTrue, defaultClasses = '') {
+    return condition ? `${defaultClasses} ${classesIfTrue}`.trim() : defaultClasses;
+  }
 
 export default function Card({
     property,
@@ -52,11 +47,11 @@ export default function Card({
                         {property.title}
                     </h2>
                     {/* precio */}
-                    <p className="mt-2 flex items-center">
+                    <p className={classNames(cheapest === property.code, "bg-green-300 text-white px-2 rounded", "mt-2 flex items-center")}>
                         <CiBadgeDollar />
                         <span className="mx-2">USD {finalPrice}</span>
                         {cheapest === property.code ? (
-                            <Signal text="El más barato" />
+                            <FiChevronsUp className="mr-1" />
                         ) : (
                             ""
                         )}
@@ -74,13 +69,13 @@ export default function Card({
                     </p>
                     {/* metros propios */}
                     {property.m2Own && (
-                        <p className="mt-2 flex items-center">
+                        <p className={classNames(mostOwned === property.code, "bg-green-300 text-white px-2 rounded", "mt-2 flex items-center")}>
                             <CiRuler />
                             <span className="mx-2">
                                 {property.m2Own} m<sup>2</sup> propios
                             </span>
                             {mostOwned === property.code ? (
-                                <Signal text="Más m² propios" />
+                                <FiChevronsUp className="mr-1" />
                             ) : (
                                 ""
                             )}
@@ -88,13 +83,13 @@ export default function Card({
                     )}
                     {/* metros de terreno */}
                     {property.m2Land && (
-                        <p className="mt-2 flex items-center">
+                        <p className={classNames(mostLand === property.code, "bg-green-300 text-white px-2 rounded", "mt-2 flex items-center")}>
                             <CiRuler />
                             <span className="mx-2">
                                 {property.m2Land} m<sup>2</sup> de terreno
                             </span>
                             {mostLand === property.code ? (
-                                <Signal text="Terreno más grande" />
+                                <FiChevronsUp className="mr-1" />
                             ) : (
                                 ""
                             )}
@@ -102,13 +97,13 @@ export default function Card({
                     )}
                     {/* metros construidos */}
                     {property.m2Build && (
-                        <p className="mt-2 flex items-center">
+                        <p className={classNames(mostBuilded === property.code, "bg-green-300 text-white px-2 rounded", "mt-2 flex items-center")}>
                             <CiRuler />
                             <span className="mx-2">
                                 {property.m2Build} m<sup>2</sup> construidos
                             </span>
                             {mostBuilded === property.code ? (
-                                <Signal text="Más m² construidos" />
+                                <FiChevronsUp className="mr-1" />
                             ) : (
                                 ""
                             )}
