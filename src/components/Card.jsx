@@ -2,6 +2,7 @@
 import { CiBadgeDollar, CiLocationOn, CiRuler, CiGrid41 } from "react-icons/ci";
 import { FiX } from "react-icons/fi";
 import Field from "./Field";
+import ShowAmenities from "./ShowAmenities";
 
 export default function Card({
     property,
@@ -46,7 +47,7 @@ export default function Card({
                     </span>
                 </div>
                 <div className="p-3">
-                    <h2 className="text-xl font-semibold text-center">
+                    <h2 className="text-xl font-semibold mb-6">
                         {property.title}
                     </h2>
 
@@ -227,6 +228,12 @@ export default function Card({
                                 </span>
                             </Field>
                         )}
+                        <hr className="mt-4" />
+                        <ShowAmenities title="Amenities" items={property.amenities} />
+                        <hr className="mt-4" />
+                        <ShowAmenities title="Servicios" items={property.services} />
+                        <hr className="mt-4" />
+                        <ShowAmenities title="Conexiones" items={property.connections} />
                 </div>
             </div>
         );

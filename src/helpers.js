@@ -12,12 +12,18 @@ export function mapProperties(properties) {
         const m2Land = formatNumber(item.m2_terreno);
         const m2Own = formatNumber(item.m2_propios);
 
-        const m2BuildSaleValue = m2Build && salePriceUSD !== null ? salePriceUSD / m2Build : null;
-        const m2LandSaleValue = m2Land && salePriceUSD !== null ? salePriceUSD / m2Land : null;
-        const m2OwnSaleValue = m2Own && salePriceUSD !== null ? salePriceUSD / m2Own : null;
-        const m2BuildRentValue = m2Build && rentPriceUSD !== null ? rentPriceUSD / m2Build : null;
-        const m2LandRentValue = m2Land && rentPriceUSD !== null ? rentPriceUSD / m2Land : null;
-        const m2OwnRentValue = m2Own && rentPriceUSD !== null ? rentPriceUSD / m2Own : null;
+        const m2BuildSaleValue =
+            m2Build && salePriceUSD !== null ? salePriceUSD / m2Build : null;
+        const m2LandSaleValue =
+            m2Land && salePriceUSD !== null ? salePriceUSD / m2Land : null;
+        const m2OwnSaleValue =
+            m2Own && salePriceUSD !== null ? salePriceUSD / m2Own : null;
+        const m2BuildRentValue =
+            m2Build && rentPriceUSD !== null ? rentPriceUSD / m2Build : null;
+        const m2LandRentValue =
+            m2Land && rentPriceUSD !== null ? rentPriceUSD / m2Land : null;
+        const m2OwnRentValue =
+            m2Own && rentPriceUSD !== null ? rentPriceUSD / m2Own : null;
 
         return {
             id: item.ID,
@@ -53,34 +59,106 @@ export function mapProperties(properties) {
             hasBaul: item.baulera === "Si",
             hasAscensor: item.ascensor === "Si",
             amenities: {
-                pool: item.amenities["Piscina"] === "true",
-                gym: item.amenities["Gimnasio"] === "true",
-                quinchoCC: item.amenities["Quincho climatizado"] === "true",
-                quinchoOutside: item.amenities["Quincho al aire libre"] === "true",
-                laundry: item.amenities["Laundry"] === "true",
-                garden: item.amenities["Jardin"] === "true",
-                winery: item.amenities["Cava de vinos"] === "true",
-                restaurant: item.amenities["Restaurant"] === "true",
-                drySauna: item.amenities["Sauna seco"] === "true",
-                steamSauna: item.amenities["Sauna húmedo"] === "true",
-                yogaArea: item.amenities["Área de yoga"] === "true",
-                hairSalon: item.amenities["Peluquería"] === "true",
-                spa: item.amenities["Spá"] === "true",
-                cinemaRoom: item.amenities["Sala de cine"] === "true",
-                kidsRoom: item.amenities["Sala de niños"] === "true",
-                teenagersRoom: item.amenities["Sala de adolescentes"] === "true",
-                coWorkingSpace: item.amenities["Sala de Co-working"] === "true"
+                pool: {
+                    value: item.amenities["Piscina"] === "true",
+                    label: "Piscina",
+                },
+                gym: {
+                    value: item.amenities["Gimnasio"] === "true",
+                    label: "Gimnasio",
+                },
+                quinchoCC: {
+                    value: item.amenities["Quincho climatizado"] === "true",
+                    label: "Quincho Climatizado",
+                },
+                quinchoOutside: {
+                    value: item.amenities["Quincho al aire libre"] === "true",
+                    label: "Quincho al Aire Libre",
+                },
+                laundry: {
+                    value: item.amenities["Laundry"] === "true",
+                    label: "Laundry",
+                },
+                garden: {
+                    value: item.amenities["Jardin"] === "true",
+                    label: "Jardín",
+                },
+                winery: {
+                    value: item.amenities["Cava de vinos"] === "true",
+                    label: "Cava de Vinos",
+                },
+                restaurant: {
+                    value: item.amenities["Restaurant"] === "true",
+                    label: "Restaurant",
+                },
+                drySauna: {
+                    value: item.amenities["Sauna seco"] === "true",
+                    label: "Sauna Seco",
+                },
+                steamSauna: {
+                    value: item.amenities["Sauna humedo"] === "true",
+                    label: "Sauna Húmedo",
+                },
+                yogaArea: {
+                    value: item.amenities["Area de yoga"] === "true",
+                    label: "Área de Yoga",
+                },
+                hairSalon: {
+                    value: item.amenities["Peluqueria"] === "true",
+                    label: "Peluquería",
+                },
+                spa: {
+                    value: item.amenities["Spa"] === "true",
+                    label: "Spá",
+                },
+                cinemaRoom: {
+                    value: item.amenities["Sala de cine"] === "true",
+                    label: "Sala de Cine",
+                },
+                kidsRoom: {
+                    value: item.amenities["Sala de niños"] === "true",
+                    label: "Sala de Niños",
+                },
+                teenagersRoom: {
+                    value: item.amenities["Sala de adolescentes"] === "true",
+                    label: "Sala de Adolescentes",
+                },
+                coWorkingSpace: {
+                    value: item.amenities["Sala de Co-working"] === "true",
+                    label: "Sala de Co-working",
+                },
             },
             services: {
-                portero24hs: item.amenities["Portero 24hs"] === "true",
-                generator: item.amenities["Generador"] === "true",
-                petFriendly: item.amenities["Pet Friendly"] === "true",
-                coworking: item.amenities["Co-working"] === "true",
+                portero24hs: {
+                    value: item.servicios["Portero 24hs"] === "true",
+                    label: "Portero 24hs",
+                },
+                generator: {
+                    value: item.servicios["Generador"] === "true",
+                    label: "Generador",
+                },
+                petFriendly: {
+                    value: item.servicios["Pet Friendly"] === "true",
+                    label: "Pet Friendly",
+                },
+                coworking: {
+                    value: item.servicios["Co-working"] === "true",
+                    label: "Co-working",
+                },
             },
-            conections: {
-                water: item.amenities["Conexión de agua"] === "true",
-                electricity: item.amenities["Conexion electrica"] === "true",
-                none: item.amenities["Ninguna"] === "true",
+            connections: {
+                water: {
+                    value: item.conexiones["Conexion de agua"] === "true",
+                    label: "Conexión de Agua",
+                },
+                electricity: {
+                    value: item.conexiones["Conexion electrica"] === "true",
+                    label: "Conexión Eléctrica",
+                },
+                none: {
+                    value: item.conexiones["Ninguna"] === "true",
+                    label: "Ninguna",
+                },
             },
         };
     });
@@ -148,7 +226,8 @@ export function getUniqueLocalities(properties) {
     // Filtramos ese array para obtener valores únicos
     return allLocals.filter((item, index, self) => {
         return (
-            index === self.findIndex((obj) => {
+            index ===
+            self.findIndex((obj) => {
                 return JSON.stringify(obj) === JSON.stringify(item);
             })
         );
@@ -176,7 +255,9 @@ export function matchesFilter(property, filters) {
 
     // Filtro por localidad
     if (filters.local) {
-        const hasMatchedLocal = Object.values(property.locality).includes(filters.local);
+        const hasMatchedLocal = Object.values(property.locality).includes(
+            filters.local
+        );
         if (!hasMatchedLocal) {
             return false;
         }

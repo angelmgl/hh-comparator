@@ -36,7 +36,8 @@ export default function useProperties() {
                     "https://homehunters.idealscloud.uk/wp-json/comparador/v1/propiedades"
                 );
                 const result = await response.json();
-                setProperties(mapProperties(result));
+                const mapped = mapProperties(result)
+                setProperties(mapped);
                 setLoading(false);
             } catch (error) {
                 setError(error);
