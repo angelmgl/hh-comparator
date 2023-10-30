@@ -22,7 +22,10 @@ export default function App() {
     const {
         currentProperties,
         setCurrentProperties,
-        cheapest
+        cheapest,
+        mostBuilded,
+        mostLand,
+        mostOwned
     } = useComparator(properties, filters);
 
     useEffect(() => {
@@ -108,6 +111,9 @@ export default function App() {
                             handleChange={changeCurrentProperty}
                             field="first"
                             cheapest={cheapest}
+                            mostBuilded={mostBuilded}
+                            mostLand={mostLand}
+                            mostOwned={mostOwned}
                             filters={filters}
                         />
                         <Card
@@ -115,6 +121,9 @@ export default function App() {
                             handleChange={changeCurrentProperty}
                             field="second"
                             cheapest={cheapest}
+                            mostBuilded={mostBuilded}
+                            mostLand={mostLand}
+                            mostOwned={mostOwned}
                             filters={filters}
                         />
                         <Card
@@ -122,6 +131,9 @@ export default function App() {
                             handleChange={changeCurrentProperty}
                             field="third"
                             cheapest={cheapest}
+                            mostBuilded={mostBuilded}
+                            mostLand={mostLand}
+                            mostOwned={mostOwned}
                             filters={filters}
                         />
                         <Card
@@ -129,6 +141,9 @@ export default function App() {
                             handleChange={changeCurrentProperty}
                             field="fourth"
                             cheapest={cheapest}
+                            mostBuilded={mostBuilded}
+                            mostLand={mostLand}
+                            mostOwned={mostOwned}
                             filters={filters}
                         />
                     </div>
