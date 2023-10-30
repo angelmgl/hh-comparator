@@ -108,24 +108,28 @@ export default function App() {
                             handleChange={changeCurrentProperty}
                             field="first"
                             cheapest={cheapest}
+                            filters={filters}
                         />
                         <Card
                             property={getCurrentPropertyData("second")}
                             handleChange={changeCurrentProperty}
                             field="second"
                             cheapest={cheapest}
+                            filters={filters}
                         />
                         <Card
                             property={getCurrentPropertyData("third")}
                             handleChange={changeCurrentProperty}
                             field="third"
                             cheapest={cheapest}
+                            filters={filters}
                         />
                         <Card
                             property={getCurrentPropertyData("fourth")}
                             handleChange={changeCurrentProperty}
                             field="fourth"
                             cheapest={cheapest}
+                            filters={filters}
                         />
                     </div>
                 </div>
