@@ -1,24 +1,30 @@
 /* eslint-disable react/prop-types */
-import {
-    CiBadgeDollar,
-    CiLocationOn,
-    CiRuler,
-} from "react-icons/ci";
-import { FiX, FiChevronsUp } from "react-icons/fi";
-
-function classNames(condition, classesIfTrue, defaultClasses = '') {
-    return condition ? `${defaultClasses} ${classesIfTrue}`.trim() : defaultClasses;
-  }
+import { CiBadgeDollar, CiLocationOn, CiRuler, CiGrid41 } from "react-icons/ci";
+import { FiX } from "react-icons/fi";
+import Field from "./Field";
 
 export default function Card({
     property,
     handleChange,
     field,
-    cheapest,
-    mostBuilded,
-    mostLand,
-    mostOwned,
+    bestProperties,
+    filters,
 }) {
+    const {
+        cheapest,
+        mostBuilded,
+        mostLand,
+        mostOwned,
+        mostValuableSalePerM2Own,
+        mostValuableRentPerM2Own,
+        mostValuableSalePerM2Build,
+        mostValuableRentPerM2Build,
+        mostValuableSalePerM2Land,
+        mostValuableRentPerM2Land,
+    } = bestProperties;
+
+    const { operationType } = filters;
+
     if (property) {
         const finalPrice = property.salePriceUSD
             ? property.salePriceUSD.toLocaleString()
@@ -46,18 +52,15 @@ export default function Card({
                     <h2 className="text-xl font-semibold text-center">
                         {property.title}
                     </h2>
+
                     {/* precio */}
-                    <p className={classNames(cheapest === property.code, "bg-green-300 text-white px-2 rounded", "mt-2 flex items-center")}>
+                    <Field condition={cheapest === property.code}>
                         <CiBadgeDollar />
                         <span className="mx-2">USD {finalPrice}</span>
-                        {cheapest === property.code ? (
-                            <FiChevronsUp className="mr-1" />
-                        ) : (
-                            ""
-                        )}
-                    </p>
+                    </Field>
+
                     {/* ubicación */}
-                    <p className="mt-2 flex items-center">
+                    <Field condition={false}>
                         <CiLocationOn />
                         <span className="mx-2">
                             {property.locality.central ||
@@ -66,49 +69,149 @@ export default function Card({
                             ,&nbsp;
                             {property.zone}
                         </span>
-                    </p>
+                    </Field>
                     {/* metros propios */}
                     {property.m2Own && (
-                        <p className={classNames(mostOwned === property.code, "bg-green-300 text-white px-2 rounded", "mt-2 flex items-center")}>
+                        <Field condition={mostOwned === property.code}>
                             <CiRuler />
                             <span className="mx-2">
                                 {property.m2Own} m<sup>2</sup> propios
                             </span>
-                            {mostOwned === property.code ? (
-                                <FiChevronsUp className="mr-1" />
-                            ) : (
-                                ""
-                            )}
-                        </p>
+                        </Field>
                     )}
+                    {/* mejor precio de venta por m2 propio */}
+                    {(operationType === "Venta" ||
+                        operationType === "Venta/Alquiler") &&
+                        property.m2OwnSaleValue && (
+                            <Field
+                                condition={
+                                    mostValuableSalePerM2Own === property.code
+                                }
+                            >
+                                <CiGrid41 />
+                                <span className="mx-2">
+                                    USD&nbsp;
+                                    {parseInt(
+                                        property.m2OwnSaleValue
+                                    ).toLocaleString()}
+                                    /m<sup>2</sup> propios
+                                </span>
+                            </Field>
+                        )}
+                    {/* mejor precio de alquiler por m2 propio */}
+                    {(operationType === "Alquiler" ||
+                        operationType === "Venta/Alquiler") &&
+                        property.m2OwnRentValue && (
+                            <Field
+                                condition={
+                                    mostValuableRentPerM2Own === property.code
+                                }
+                            >
+                                <CiGrid41 />
+                                <span className="mx-2">
+                                    USD&nbsp;
+                                    {parseInt(
+                                        property.m2OwnRentValue
+                                    ).toLocaleString()}{" "}
+                                    mes x m<sup>2</sup> propios
+                                </span>
+                            </Field>
+                        )}
                     {/* metros de terreno */}
                     {property.m2Land && (
-                        <p className={classNames(mostLand === property.code, "bg-green-300 text-white px-2 rounded", "mt-2 flex items-center")}>
+                        <Field condition={mostLand === property.code}>
                             <CiRuler />
                             <span className="mx-2">
                                 {property.m2Land} m<sup>2</sup> de terreno
                             </span>
-                            {mostLand === property.code ? (
-                                <FiChevronsUp className="mr-1" />
-                            ) : (
-                                ""
-                            )}
-                        </p>
+                        </Field>
                     )}
+                    {/* mejor precio de venta por m2 de terreno */}
+                    {(operationType === "Venta" ||
+                        operationType === "Venta/Alquiler") &&
+                        property.m2LandSaleValue && (
+                            <Field
+                                condition={
+                                    mostValuableSalePerM2Land === property.code
+                                }
+                            >
+                                <CiGrid41 />
+                                <span className="mx-2">
+                                    USD&nbsp;
+                                    {parseInt(
+                                        property.m2LandSaleValue
+                                    ).toLocaleString()}
+                                    /m<sup>2</sup> de terreno
+                                </span>
+                            </Field>
+                        )}
+                    {/* mejor precio de alquiler por m2 de terreno */}
+                    {(operationType === "Alquiler" ||
+                        operationType === "Venta/Alquiler") &&
+                        property.m2LandRentValue && (
+                            <Field
+                                condition={
+                                    mostValuableRentPerM2Land === property.code
+                                }
+                            >
+                                <CiGrid41 />
+                                <span className="mx-2">
+                                    USD&nbsp;
+                                    {parseInt(
+                                        property.m2LandRentValue
+                                    ).toLocaleString()}
+                                    &nbsp;mes x m<sup>2</sup> de terreno
+                                </span>
+                            </Field>
+                        )}
                     {/* metros construidos */}
                     {property.m2Build && (
-                        <p className={classNames(mostBuilded === property.code, "bg-green-300 text-white px-2 rounded", "mt-2 flex items-center")}>
+                        <Field condition={mostBuilded === property.code}>
+                            {/* Aquí van los elementos hijos, por ejemplo: */}
                             <CiRuler />
                             <span className="mx-2">
                                 {property.m2Build} m<sup>2</sup> construidos
                             </span>
-                            {mostBuilded === property.code ? (
-                                <FiChevronsUp className="mr-1" />
-                            ) : (
-                                ""
-                            )}
-                        </p>
+                        </Field>
                     )}
+                    {/* mejor precio de venta por m2 construidos */}
+                    {(operationType === "Venta" ||
+                        operationType === "Venta/Alquiler") &&
+                        property.m2BuildSaleValue && (
+                            <Field
+                                condition={
+                                    mostValuableSalePerM2Build === property.code
+                                }
+                            >
+                                <CiGrid41 />
+                                <span className="mx-2">
+                                    USD&nbsp;
+                                    {parseInt(
+                                        property.m2BuildSaleValue
+                                    ).toLocaleString()}
+                                    /m<sup>2</sup> construidos
+                                </span>
+                            </Field>
+                        )}
+                    {/* mejor precio de alquiler por m2 construidos */}
+                    {(operationType === "Alquiler" ||
+                        operationType === "Venta/Alquiler") &&
+                        property.m2BuildRentValue && (
+                            <Field
+                                condition={
+                                    mostValuableRentPerM2Build === property.code
+                                }
+                            >
+                                <CiGrid41 />
+                                <span className="mx-2">
+                                    USD&nbsp;
+                                    {parseInt(
+                                        property.m2BuildRentValue
+                                    ).toLocaleString()}
+                                    &nbsp;mes x m<sup>2</sup> construidos
+                                </span>
+                            </Field>
+                        )}
                 </div>
             </div>
         );

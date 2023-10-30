@@ -25,7 +25,13 @@ export default function App() {
         cheapest,
         mostBuilded,
         mostLand,
-        mostOwned
+        mostOwned,
+        mostValuableSalePerM2Own,
+        mostValuableRentPerM2Own,
+        mostValuableSalePerM2Build,
+        mostValuableRentPerM2Build,
+        mostValuableSalePerM2Land,
+        mostValuableRentPerM2Land,
     } = useComparator(properties, filters);
 
     useEffect(() => {
@@ -110,40 +116,72 @@ export default function App() {
                             property={getCurrentPropertyData("first")}
                             handleChange={changeCurrentProperty}
                             field="first"
-                            cheapest={cheapest}
-                            mostBuilded={mostBuilded}
-                            mostLand={mostLand}
-                            mostOwned={mostOwned}
+                            bestProperties={{
+                                cheapest,
+                                mostBuilded,
+                                mostLand,
+                                mostOwned,
+                                mostValuableSalePerM2Own,
+                                mostValuableRentPerM2Own,
+                                mostValuableSalePerM2Build,
+                                mostValuableRentPerM2Build,
+                                mostValuableSalePerM2Land,
+                                mostValuableRentPerM2Land,
+                            }}
                             filters={filters}
                         />
                         <Card
                             property={getCurrentPropertyData("second")}
                             handleChange={changeCurrentProperty}
                             field="second"
-                            cheapest={cheapest}
-                            mostBuilded={mostBuilded}
-                            mostLand={mostLand}
-                            mostOwned={mostOwned}
+                            bestProperties={{
+                                cheapest,
+                                mostBuilded,
+                                mostLand,
+                                mostOwned,
+                                mostValuableSalePerM2Own,
+                                mostValuableRentPerM2Own,
+                                mostValuableSalePerM2Build,
+                                mostValuableRentPerM2Build,
+                                mostValuableSalePerM2Land,
+                                mostValuableRentPerM2Land,
+                            }}
                             filters={filters}
                         />
                         <Card
                             property={getCurrentPropertyData("third")}
                             handleChange={changeCurrentProperty}
                             field="third"
-                            cheapest={cheapest}
-                            mostBuilded={mostBuilded}
-                            mostLand={mostLand}
-                            mostOwned={mostOwned}
+                            bestProperties={{
+                                cheapest,
+                                mostBuilded,
+                                mostLand,
+                                mostOwned,
+                                mostValuableSalePerM2Own,
+                                mostValuableRentPerM2Own,
+                                mostValuableSalePerM2Build,
+                                mostValuableRentPerM2Build,
+                                mostValuableSalePerM2Land,
+                                mostValuableRentPerM2Land,
+                            }}
                             filters={filters}
                         />
                         <Card
                             property={getCurrentPropertyData("fourth")}
                             handleChange={changeCurrentProperty}
                             field="fourth"
-                            cheapest={cheapest}
-                            mostBuilded={mostBuilded}
-                            mostLand={mostLand}
-                            mostOwned={mostOwned}
+                            bestProperties={{
+                                cheapest,
+                                mostBuilded,
+                                mostLand,
+                                mostOwned,
+                                mostValuableSalePerM2Own,
+                                mostValuableRentPerM2Own,
+                                mostValuableSalePerM2Build,
+                                mostValuableRentPerM2Build,
+                                mostValuableSalePerM2Land,
+                                mostValuableRentPerM2Land,
+                            }}
                             filters={filters}
                         />
                     </div>

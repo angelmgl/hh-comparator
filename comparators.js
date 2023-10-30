@@ -31,7 +31,10 @@ export function getTheCheapest(
 
         let xcheapest;
 
-        if (operationType === "Venta" && validProperties.length > 0) {
+        if (
+            operationType === "Venta" ||
+            (operationType === "Venta/Alquiler" && validProperties.length > 0)
+        ) {
             xcheapest = validProperties?.reduce((cheapest, currentProperty) => {
                 return currentProperty.salePriceUSD < cheapest.salePriceUSD
                     ? currentProperty
@@ -52,18 +55,84 @@ export function getTheCheapest(
 }
 
 export function getTheMostBuilded(condition, properties, currentProperties) {
-    return condition ? getTheMost(properties, currentProperties, "m2Build") : null;
+    return condition
+        ? getTheMost(properties, currentProperties, "m2Build", true)
+        : null;
 }
 
 export function getTheMostOwned(condition, properties, currentProperties) {
-    return condition ? getTheMost(properties, currentProperties, "m2Own") : null;
+    return condition
+        ? getTheMost(properties, currentProperties, "m2Own", true)
+        : null;
 }
 
 export function getTheMostLand(condition, properties, currentProperties) {
-    return condition ? getTheMost(properties, currentProperties, "m2Land") : null;
+    return condition
+        ? getTheMost(properties, currentProperties, "m2Land", true)
+        : null;
 }
 
-function getTheMost(properties, currentProperties, field) {
+export function getTheMostValuableSalePerM2Own(
+    condition,
+    properties,
+    currentProperties
+) {
+    return condition
+        ? getTheMost(properties, currentProperties, "m2OwnSaleValue", false)
+        : null;
+}
+
+export function getTheMostValuableSalePerM2Build(
+    condition,
+    properties,
+    currentProperties
+) {
+    return condition
+        ? getTheMost(properties, currentProperties, "m2BuildSaleValue", false)
+        : null;
+}
+
+export function getTheMostValuableSalePerM2Land(
+    condition,
+    properties,
+    currentProperties
+) {
+    return condition
+        ? getTheMost(properties, currentProperties, "m2LandSaleValue", false)
+        : null;
+}
+
+export function getTheMostValuableRentPerM2Own(
+    condition,
+    properties,
+    currentProperties
+) {
+    return condition
+        ? getTheMost(properties, currentProperties, "m2OwnRentValue", false)
+        : null;
+}
+
+export function getTheMostValuableRentPerM2Build(
+    condition,
+    properties,
+    currentProperties
+) {
+    return condition
+        ? getTheMost(properties, currentProperties, "m2BuildRentValue", false)
+        : null;
+}
+
+export function getTheMostValuableRentPerM2Land(
+    condition,
+    properties,
+    currentProperties
+) {
+    return condition
+        ? getTheMost(properties, currentProperties, "m2LandRentValue", false)
+        : null;
+}
+
+function getTheMost(properties, currentProperties, field, highest) {
     const fullProperties = ["first", "second", "third", "fourth"].map((key) =>
         properties.find((property) => property.code === currentProperties[key])
     );
@@ -74,8 +143,16 @@ function getTheMost(properties, currentProperties, field) {
 
     if (validProperties.length === 0) return null;
 
-    const mostProperty = validProperties.reduce((max, currentProperty) => {
-        return currentProperty[field] > max[field] ? currentProperty : max;
+    const mostProperty = validProperties.reduce((prev, currentProperty) => {
+        if (highest) {
+            return currentProperty[field] > prev[field]
+                ? currentProperty
+                : prev;
+        } else {
+            return currentProperty[field] < prev[field]
+                ? currentProperty
+                : prev;
+        }
     }, validProperties[0]);
 
     return mostProperty ? mostProperty.code : null;

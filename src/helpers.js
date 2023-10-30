@@ -6,6 +6,19 @@ function formatNumber(number) {
 
 export function mapProperties(properties) {
     let mappedProperties = properties.map((item) => {
+        const salePriceUSD = formatNumber(item.precio_venta_usd);
+        const rentPriceUSD = formatNumber(item.precio_alquiler_usd);
+        const m2Build = formatNumber(item.m2_construccion);
+        const m2Land = formatNumber(item.m2_terreno);
+        const m2Own = formatNumber(item.m2_propios);
+
+        const m2BuildSaleValue = m2Build && salePriceUSD !== null ? salePriceUSD / m2Build : null;
+        const m2LandSaleValue = m2Land && salePriceUSD !== null ? salePriceUSD / m2Land : null;
+        const m2OwnSaleValue = m2Own && salePriceUSD !== null ? salePriceUSD / m2Own : null;
+        const m2BuildRentValue = m2Build && rentPriceUSD !== null ? rentPriceUSD / m2Build : null;
+        const m2LandRentValue = m2Land && rentPriceUSD !== null ? rentPriceUSD / m2Land : null;
+        const m2OwnRentValue = m2Own && rentPriceUSD !== null ? rentPriceUSD / m2Own : null;
+
         return {
             id: item.ID,
             title: item.title,
@@ -19,17 +32,23 @@ export function mapProperties(properties) {
             },
             operationType: item.tipo_operacion,
             propertyType: item.tipo_propiedad,
-            salePriceUSD: formatNumber(item.precio_venta_usd),
+            salePriceUSD,
             salePriceGS: formatNumber(item.precio_venta_gs),
-            rentPriceUSD: formatNumber(item.precio_alquiler_usd),
+            rentPriceUSD,
             rentPriceGS: formatNumber(item.precio_alquiler_gs),
             dimensions: item.dimensiones,
             rooms: item.cantidad_de_habitaciones,
             bathrooms: item.cantidad_de_banos,
             floors: item.cantidad_de_pisos,
-            m2Build: item.m2_construccion ? parseInt(item.m2_construccion) : null,
-            m2Land: item.m2_terreno ? parseInt(item.m2_terreno) : null,
-            m2Own: item.m2_propios ? parseInt(item.m2_propios) : null,
+            m2Build,
+            m2Land,
+            m2Own,
+            m2BuildSaleValue,
+            m2LandSaleValue,
+            m2OwnSaleValue,
+            m2BuildRentValue,
+            m2LandRentValue,
+            m2OwnRentValue,
             hasPool: item.piscina === "Si",
             hasBaul: item.baulera === "Si",
             hasAscensor: item.ascensor === "Si",
