@@ -90,7 +90,7 @@ export function getTheMostValuableRentPerM2Land(
 
 function getTheMost(properties, currentProperties, field, highest) {
     const fullProperties = ["first", "second", "third", "fourth"].map((key) =>
-        properties.find((property) => property.code === currentProperties[key])
+        properties.find((property) => property.id == currentProperties[key])
     );
 
     const validProperties = fullProperties.filter(
@@ -111,5 +111,5 @@ function getTheMost(properties, currentProperties, field, highest) {
         }
     }, validProperties[0]);
 
-    return mostProperty ? mostProperty.code : null;
+    return mostProperty ? mostProperty.id : null;
 }

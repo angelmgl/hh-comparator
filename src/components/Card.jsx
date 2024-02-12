@@ -55,7 +55,7 @@ export default function Card({
                     {(operationType === "Venta" ||
                         operationType === "Venta/Alquiler") &&
                         property.salePriceUSD && (
-                            <Field condition={cheapestSale === property.code}>
+                            <Field condition={cheapestSale === property.id}>
                                 <CiBadgeDollar />
                                 <span className="mx-2">
                                     USD {property.salePriceUSD.toLocaleString()}
@@ -67,7 +67,7 @@ export default function Card({
                     {(operationType === "Alquiler" ||
                         operationType === "Venta/Alquiler") &&
                         property.rentPriceUSD && (
-                            <Field condition={cheapestRent === property.code}>
+                            <Field condition={cheapestRent === property.id}>
                                 <CiBadgeDollar />
                                 <span className="mx-2">
                                     USD {property.rentPriceUSD.toLocaleString()} al mes
@@ -88,7 +88,7 @@ export default function Card({
                     </Field>
                     {/* metros propios */}
                     {property.m2Own && (
-                        <Field condition={mostOwned === property.code}>
+                        <Field condition={mostOwned === property.id}>
                             <CiRuler />
                             <span className="mx-2">
                                 {property.m2Own} m<sup>2</sup> propios
@@ -101,7 +101,7 @@ export default function Card({
                         property.m2OwnSaleValue && (
                             <Field
                                 condition={
-                                    mostValuableSalePerM2Own === property.code
+                                    mostValuableSalePerM2Own === property.id
                                 }
                             >
                                 <CiGrid41 />
@@ -120,7 +120,7 @@ export default function Card({
                         property.m2OwnRentValue && (
                             <Field
                                 condition={
-                                    mostValuableRentPerM2Own === property.code
+                                    mostValuableRentPerM2Own === property.id
                                 }
                             >
                                 <CiGrid41 />
@@ -135,7 +135,7 @@ export default function Card({
                         )}
                     {/* metros de terreno */}
                     {property.m2Land && (
-                        <Field condition={mostLand === property.code}>
+                        <Field condition={mostLand === property.id}>
                             <CiRuler />
                             <span className="mx-2">
                                 {property.m2Land} m<sup>2</sup> de terreno
@@ -148,7 +148,7 @@ export default function Card({
                         property.m2LandSaleValue && (
                             <Field
                                 condition={
-                                    mostValuableSalePerM2Land === property.code
+                                    mostValuableSalePerM2Land === property.id
                                 }
                             >
                                 <CiGrid41 />
@@ -167,7 +167,7 @@ export default function Card({
                         property.m2LandRentValue && (
                             <Field
                                 condition={
-                                    mostValuableRentPerM2Land === property.code
+                                    mostValuableRentPerM2Land === property.id
                                 }
                             >
                                 <CiGrid41 />
@@ -182,7 +182,7 @@ export default function Card({
                         )}
                     {/* metros construidos */}
                     {property.m2Build && (
-                        <Field condition={mostBuilded === property.code}>
+                        <Field condition={mostBuilded === property.id}>
                             {/* Aquí van los elementos hijos, por ejemplo: */}
                             <CiRuler />
                             <span className="mx-2">
@@ -196,7 +196,7 @@ export default function Card({
                         property.m2BuildSaleValue && (
                             <Field
                                 condition={
-                                    mostValuableSalePerM2Build === property.code
+                                    mostValuableSalePerM2Build === property.id
                                 }
                             >
                                 <CiGrid41 />
@@ -215,7 +215,7 @@ export default function Card({
                         property.m2BuildRentValue && (
                             <Field
                                 condition={
-                                    mostValuableRentPerM2Build === property.code
+                                    mostValuableRentPerM2Build === property.id
                                 }
                             >
                                 <CiGrid41 />

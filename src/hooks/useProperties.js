@@ -54,7 +54,7 @@ export default function useProperties() {
         );
         const options = filtered.map((property) => ({
             label: property.title,
-            value: property.code,
+            value: property.id,
         }));
         setFilteredProperties(options);
     }, [properties, filters]);

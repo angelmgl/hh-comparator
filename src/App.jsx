@@ -6,21 +6,20 @@ import useProperties from "./hooks/useProperties";
 import useComparator from "./hooks/useComparator";
 import "./App.css";
 import { getClassNames } from "./helpers";
-// import html2pdf from "html2pdf.js";
+import html2pdf from "html2pdf.js";
 
 function downloadPDF() {
-    // var element = document.getElementById("content");
-    // var opt = {
-    //     margin: 4,
-    //     filename: "documento.pdf",
-    //     image: { type: "jpeg", quality: 0.98 },
-    //     html2canvas: { scale: 5 },
-    //     jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
-    // };
+    var element = document.getElementById("content");
+    var opt = {
+        margin: 4,
+        filename: "documento.pdf",
+        image: { type: "jpeg", quality: 0.98 },
+        html2canvas: { scale: 5 },
+        jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+    };
 
-    // // New Promise-based usage:
-    // html2pdf().from(element).set(opt).save();
-    window.print();
+    // New Promise-based usage:
+    html2pdf().from(element).set(opt).save();
 }
 
 export default function App() {
@@ -62,7 +61,7 @@ export default function App() {
 
     const getCurrentPropertyData = (key) => {
         return properties.filter(
-            (property) => property.id === currentProperties[key]
+            (property) => property.id == currentProperties[key]
         )[0];
     };
 
@@ -130,7 +129,7 @@ export default function App() {
                         />
                     </div>
                     <div className="mt-4 grid grid-cols-4 gap-4">
-                        <Card
+                        {currentProperties.first && <Card
                             property={getCurrentPropertyData("first")}
                             handleChange={changeCurrentProperty}
                             field="first"
@@ -148,8 +147,8 @@ export default function App() {
                                 mostValuableRentPerM2Land,
                             }}
                             filters={filters}
-                        />
-                        <Card
+                        />}
+                        {currentProperties.second && <Card
                             property={getCurrentPropertyData("second")}
                             handleChange={changeCurrentProperty}
                             field="second"
@@ -167,8 +166,8 @@ export default function App() {
                                 mostValuableRentPerM2Land,
                             }}
                             filters={filters}
-                        />
-                        <Card
+                        />}
+                        {currentProperties.third && <Card
                             property={getCurrentPropertyData("third")}
                             handleChange={changeCurrentProperty}
                             field="third"
@@ -186,8 +185,8 @@ export default function App() {
                                 mostValuableRentPerM2Land,
                             }}
                             filters={filters}
-                        />
-                        <Card
+                        />}
+                        {currentProperties.fourth && <Card
                             property={getCurrentPropertyData("fourth")}
                             handleChange={changeCurrentProperty}
                             field="fourth"
@@ -205,7 +204,7 @@ export default function App() {
                                 mostValuableRentPerM2Land,
                             }}
                             filters={filters}
-                        />
+                        />}
                     </div>
                 </div>
                 <div>
