@@ -33,7 +33,7 @@ export default function useProperties() {
         const fetchProperties = async () => {
             try {
                 const response = await fetch(
-                    "https://homehunters.idealscloud.uk/wp-json/comparador/v1/propiedades"
+                    "https://homehunters.com.py/wp-json/comparador/v1/propiedades"
                 );
                 const result = await response.json();
                 const mapped = mapProperties(result)

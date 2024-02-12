@@ -1,5 +1,5 @@
 function formatNumber(number) {
-    let int = parseInt(number);
+    let int = parseFloat(number.replace(',', '.'));
 
     return int ? int : null;
 }

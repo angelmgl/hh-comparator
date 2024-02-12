@@ -6,20 +6,21 @@ import useProperties from "./hooks/useProperties";
 import useComparator from "./hooks/useComparator";
 import "./App.css";
 import { getClassNames } from "./helpers";
-import html2pdf from "html2pdf.js";
+// import html2pdf from "html2pdf.js";
 
 function downloadPDF() {
-    var element = document.getElementById("content");
-    var opt = {
-        margin: 4,
-        filename: "documento.pdf",
-        image: { type: "jpeg", quality: 0.98 },
-        html2canvas: { scale: 5 },
-        jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
-    };
+    // var element = document.getElementById("content");
+    // var opt = {
+    //     margin: 4,
+    //     filename: "documento.pdf",
+    //     image: { type: "jpeg", quality: 0.98 },
+    //     html2canvas: { scale: 5 },
+    //     jsPDF: { unit: "mm", format: "a4", orientation: "landscape" },
+    // };
 
-    // New Promise-based usage:
-    html2pdf().from(element).set(opt).save();
+    // // New Promise-based usage:
+    // html2pdf().from(element).set(opt).save();
+    window.print();
 }
 
 export default function App() {
@@ -61,7 +62,7 @@ export default function App() {
 
     const getCurrentPropertyData = (key) => {
         return properties.filter(
-            (property) => property.code === currentProperties[key]
+            (property) => property.id === currentProperties[key]
         )[0];
     };
 
