@@ -89,7 +89,7 @@ export function getTheMostValuableRentPerM2Land(
 }
 
 function getTheMost(properties, currentProperties, field, highest) {
-    const fullProperties = ["first", "second", "third", "fourth"].map((key) =>
+    const fullProperties = ["first", "two", "third", "fourth"].map((key) =>
         properties.find((property) => property.id == currentProperties[key])
     );
 

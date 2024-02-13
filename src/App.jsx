@@ -31,7 +31,7 @@ function generateURL(currentProperties, filters) {
     const urlWithParams = `${APP_URL}/?${queryParams.join("&")}`;
 
     // Copiar la URL al portapapeles
-    navigator.clipboard.writeText(urlWithParams)
+    navigator.clipboard.writeText(urlWithParams);
 }
 
 export default function App() {
@@ -45,7 +45,7 @@ export default function App() {
         propertyTypeOptions,
         zoneOptions,
         localityOptions,
-        getFiltersFromURL
+        getFiltersFromURL,
     } = useProperties();
 
     const {
@@ -68,7 +68,7 @@ export default function App() {
     useEffect(() => {
         setCurrentProperties({
             first: null,
-            second: null,
+            two: null,
             third: null,
             fourth: null,
         });
@@ -107,8 +107,8 @@ export default function App() {
         if (!loading) {
             setTimeout(() => {
                 getFiltersFromURL();
-                setTimeout(() => getPropertiesFromURL(), 300);
-            }, 100);
+                setTimeout(() => getPropertiesFromURL(), 500);
+            }, 500);
         }
     }, [loading]);
 
@@ -156,15 +156,12 @@ export default function App() {
                                 field="first"
                                 required={true}
                             />
-                            {(currentProperties.second || showCards > 1) && (
+                            {(currentProperties.two || showCards > 1) && (
                                 <div className="relative">
                                     <button
                                         onClick={() => {
                                             setShowCards(showCards - 1);
-                                            changeCurrentProperty(
-                                                "second",
-                                                null
-                                            );
+                                            changeCurrentProperty("two", null);
                                         }}
                                         className="absolute -top-7 right-0 bg-red-500 hover:bg-red-700 text-white p-1"
                                     >
@@ -174,9 +171,9 @@ export default function App() {
                                         label="Nueva propiedad"
                                         placeholder="Selecciona una propiedad..."
                                         options={filteredProperties}
-                                        defaultValue={currentProperties.second}
+                                        defaultValue={currentProperties.two}
                                         handleChange={changeCurrentProperty}
-                                        field="second"
+                                        field="two"
                                         required={true}
                                     />
                                 </div>
@@ -250,9 +247,9 @@ export default function App() {
                                 }}
                                 filters={filters}
                             />
-                            {(currentProperties.second || showCards > 1) && (
+                            {(currentProperties.two || showCards > 1) && (
                                 <Card
-                                    property={getCurrentPropertyData("second")}
+                                    property={getCurrentPropertyData("two")}
                                     bestProperties={{
                                         cheapestSale,
                                         cheapestRent,

@@ -16,7 +16,7 @@ import {
 export default function useComparator(properties, filters) {
     const [currentProperties, setCurrentProperties] = useState({
         first: null,
-        second: null,
+        two: null,
         third: null,
         fourth: null,
     });
@@ -129,7 +129,7 @@ export default function useComparator(properties, filters) {
 
             return {
                 first: sortedValues[0] || null,
-                second: sortedValues[1] || null,
+                two: sortedValues[1] || null,
                 third: sortedValues[2] || null,
                 fourth: sortedValues[3] || null,
             };
@@ -158,7 +158,7 @@ export default function useComparator(properties, filters) {
         // Crear un objeto temporal para almacenar los parámetros encontrados
         const params = {
             first: searchParams.get("first"),
-            second: searchParams.get("second"),
+            two: searchParams.get("two"),
             third: searchParams.get("third"),
             fourth: searchParams.get("fourth"),
         };
@@ -185,6 +185,6 @@ export default function useComparator(properties, filters) {
         mostValuableSalePerM2Land,
         mostValuableRentPerM2Land,
         hasTwoOrMoreValues,
-        getPropertiesFromURL
+        getPropertiesFromURL,
     };
 }
