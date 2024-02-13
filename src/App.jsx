@@ -1,9 +1,10 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Accordeon from "./components/Accordeon";
 import Card from "./components/Card";
 import SelectInput from "./components/SelectInput";
 import useProperties from "./hooks/useProperties";
 import useComparator from "./hooks/useComparator";
+import { FiX } from "react-icons/fi";
 import "./App.css";
 // import { getClassNames } from "./helpers";
 // getClassNames(
@@ -61,6 +62,12 @@ export default function App() {
         });
     }, [filters, setCurrentProperties]);
 
+    const [showCards, setShowCards] = useState(1);
+
+    const [showAddButton, setShowAddButton] = useState(true);
+
+    useEffect(() => setShowAddButton(showCards < 4), [showCards]);
+
     const getCurrentPropertyData = (key) => {
         return properties.filter(
             (property) => property.id == currentProperties[key]
@@ -87,47 +94,83 @@ export default function App() {
                     zoneOptions={zoneOptions}
                     localOptions={localityOptions}
                 />
-                <div
-                    id="content"
-                    className="my-12 md:my-20 relative"
-                >
+                <div id="content" className="my-12 md:my-20 relative">
                     <h2 className="text-3xl font-semibold">Inmuebles</h2>
                     <div className="mt-4 grid grid-cols-4 gap-4">
                         <SelectInput
-                            label="Propiedad 1"
+                            label="Nueva propiedad"
                             placeholder="Selecciona una propiedad..."
                             options={filteredProperties}
                             defaultValue={currentProperties.first}
                             handleChange={changeCurrentProperty}
                             field="first"
                         />
-                        { currentProperties.second && <SelectInput
-                            label="Propiedad 2"
-                            placeholder="Selecciona una propiedad..."
-                            options={filteredProperties}
-                            defaultValue={currentProperties.second}
-                            handleChange={changeCurrentProperty}
-                            field="second"
-                        /> }
-                        { currentProperties.third && <SelectInput
-                            label="Propiedad 3"
-                            placeholder="Selecciona una propiedad..."
-                            options={filteredProperties}
-                            defaultValue={currentProperties.third}
-                            handleChange={changeCurrentProperty}
-                            field="third"
-                        /> }
-                        { currentProperties.fourth && <SelectInput
-                            label="Propiedad 4"
-                            placeholder="Selecciona una propiedad..."
-                            options={filteredProperties}
-                            defaultValue={currentProperties.fourth}
-                            handleChange={changeCurrentProperty}
-                            field="fourth"
-                        />}
+                        {(currentProperties.second || showCards > 1) && (
+                            <div className="relative">
+                                <button
+                                    onClick={() => {
+                                        setShowCards(showCards - 1);
+                                        changeCurrentProperty("second", null);
+                                    }}
+                                    className="absolute -top-7 right-0 bg-red-500 hover:bg-red-700 text-white p-1"
+                                >
+                                    <FiX />
+                                </button>
+                                <SelectInput
+                                    label="Nueva propiedad"
+                                    placeholder="Selecciona una propiedad..."
+                                    options={filteredProperties}
+                                    defaultValue={currentProperties.second}
+                                    handleChange={changeCurrentProperty}
+                                    field="second"
+                                />
+                            </div>
+                        )}
+                        {(currentProperties.third || showCards > 2) && (
+                            <div className="relative">
+                                <button
+                                    onClick={() => {
+                                        setShowCards(showCards - 1);
+                                        changeCurrentProperty("third", null);
+                                    }}
+                                    className="absolute -top-7 right-0 bg-red-500 hover:bg-red-700 text-white p-1"
+                                >
+                                    <FiX />
+                                </button>
+                                <SelectInput
+                                    label="Nueva propiedad"
+                                    placeholder="Selecciona una propiedad..."
+                                    options={filteredProperties}
+                                    defaultValue={currentProperties.third}
+                                    handleChange={changeCurrentProperty}
+                                    field="third"
+                                />
+                            </div>
+                        )}
+                        {(currentProperties.fourth || showCards > 3) && (
+                            <div className="relative">
+                                <button
+                                    onClick={() => {
+                                        setShowCards(showCards - 1);
+                                        changeCurrentProperty("fourth", null);
+                                    }}
+                                    className="absolute -top-7 right-0 bg-red-500 hover:bg-red-700 text-white p-1"
+                                >
+                                    <FiX />
+                                </button>
+                                <SelectInput
+                                    label="Nueva propiedad"
+                                    placeholder="Selecciona una propiedad..."
+                                    options={filteredProperties}
+                                    defaultValue={currentProperties.fourth}
+                                    handleChange={changeCurrentProperty}
+                                    field="fourth"
+                                />
+                            </div>
+                        )}
                     </div>
                     <div className="mt-4 grid grid-cols-4 gap-4">
-                        {currentProperties.first && <Card
+                        <Card
                             property={getCurrentPropertyData("first")}
                             handleChange={changeCurrentProperty}
                             field="first"
@@ -145,68 +188,89 @@ export default function App() {
                                 mostValuableRentPerM2Land,
                             }}
                             filters={filters}
-                        />}
-                        {currentProperties.second && <Card
-                            property={getCurrentPropertyData("second")}
-                            handleChange={changeCurrentProperty}
-                            field="second"
-                            bestProperties={{
-                                cheapestSale,
-                                cheapestRent,
-                                mostBuilded,
-                                mostLand,
-                                mostOwned,
-                                mostValuableSalePerM2Own,
-                                mostValuableRentPerM2Own,
-                                mostValuableSalePerM2Build,
-                                mostValuableRentPerM2Build,
-                                mostValuableSalePerM2Land,
-                                mostValuableRentPerM2Land,
-                            }}
-                            filters={filters}
-                        />}
-                        {currentProperties.third && <Card
-                            property={getCurrentPropertyData("third")}
-                            handleChange={changeCurrentProperty}
-                            field="third"
-                            bestProperties={{
-                                cheapestSale,
-                                cheapestRent,
-                                mostBuilded,
-                                mostLand,
-                                mostOwned,
-                                mostValuableSalePerM2Own,
-                                mostValuableRentPerM2Own,
-                                mostValuableSalePerM2Build,
-                                mostValuableRentPerM2Build,
-                                mostValuableSalePerM2Land,
-                                mostValuableRentPerM2Land,
-                            }}
-                            filters={filters}
-                        />}
-                        {currentProperties.fourth && <Card
-                            property={getCurrentPropertyData("fourth")}
-                            handleChange={changeCurrentProperty}
-                            field="fourth"
-                            bestProperties={{
-                                cheapestSale,
-                                cheapestRent,
-                                mostBuilded,
-                                mostLand,
-                                mostOwned,
-                                mostValuableSalePerM2Own,
-                                mostValuableRentPerM2Own,
-                                mostValuableSalePerM2Build,
-                                mostValuableRentPerM2Build,
-                                mostValuableSalePerM2Land,
-                                mostValuableRentPerM2Land,
-                            }}
-                            filters={filters}
-                        />}
+                        />
+                        {(currentProperties.second || showCards > 1) && (
+                            <Card
+                                property={getCurrentPropertyData("second")}
+                                handleChange={changeCurrentProperty}
+                                field="second"
+                                bestProperties={{
+                                    cheapestSale,
+                                    cheapestRent,
+                                    mostBuilded,
+                                    mostLand,
+                                    mostOwned,
+                                    mostValuableSalePerM2Own,
+                                    mostValuableRentPerM2Own,
+                                    mostValuableSalePerM2Build,
+                                    mostValuableRentPerM2Build,
+                                    mostValuableSalePerM2Land,
+                                    mostValuableRentPerM2Land,
+                                }}
+                                filters={filters}
+                            />
+                        )}
+                        {(currentProperties.third || showCards > 2) && (
+                            <Card
+                                property={getCurrentPropertyData("third")}
+                                handleChange={changeCurrentProperty}
+                                field="third"
+                                bestProperties={{
+                                    cheapestSale,
+                                    cheapestRent,
+                                    mostBuilded,
+                                    mostLand,
+                                    mostOwned,
+                                    mostValuableSalePerM2Own,
+                                    mostValuableRentPerM2Own,
+                                    mostValuableSalePerM2Build,
+                                    mostValuableRentPerM2Build,
+                                    mostValuableSalePerM2Land,
+                                    mostValuableRentPerM2Land,
+                                }}
+                                filters={filters}
+                            />
+                        )}
+                        {(currentProperties.fourth || showCards > 3) && (
+                            <Card
+                                property={getCurrentPropertyData("fourth")}
+                                handleChange={changeCurrentProperty}
+                                field="fourth"
+                                bestProperties={{
+                                    cheapestSale,
+                                    cheapestRent,
+                                    mostBuilded,
+                                    mostLand,
+                                    mostOwned,
+                                    mostValuableSalePerM2Own,
+                                    mostValuableRentPerM2Own,
+                                    mostValuableSalePerM2Build,
+                                    mostValuableRentPerM2Build,
+                                    mostValuableSalePerM2Land,
+                                    mostValuableRentPerM2Land,
+                                }}
+                                filters={filters}
+                            />
+                        )}
+                        {showAddButton && (
+                            <div className="flex items-center justify-center">
+                                <button
+                                    onClick={() => setShowCards(showCards + 1)}
+                                    className="h-16 w-16 pb-3 flex items-center justify-center leading-none rounded-full bg-black text-white text-6xl hover:bg-gray-700"
+                                >
+                                    +
+                                </button>
+                            </div>
+                        )}
                     </div>
                 </div>
                 <div>
-                    <button className="text-white uppercase bg-black hover:bg-gray-700 px-4 py-2 font-medium text-sm" onClick={downloadPDF}>Descargar</button>
+                    <button
+                        className="text-white uppercase bg-black hover:bg-gray-700 px-4 py-2 font-medium text-sm"
+                        onClick={downloadPDF}
+                    >
+                        Descargar
+                    </button>
                 </div>
             </div>
         </main>
