@@ -16,10 +16,6 @@ export default function useProperties() {
         operationType: null,
         zone: null,
         local: null,
-        price: {
-            from: 0,
-            to: Number.MAX_SAFE_INTEGER,
-        },
     });
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -106,6 +102,28 @@ export default function useProperties() {
         }
     }, [filters.zone, localities]);
 
+    const getFiltersFromURL = () => {
+        // Crear un objeto URL usando window.location para acceder a la URL actual
+        const url = new URL(window.location);
+
+        // Utilizar URLSearchParams para obtener los parámetros de la URL
+        const searchParams = new URLSearchParams(url.search);
+
+        // Crear un objeto temporal para almacenar los parámetros encontrados
+        const params = {
+            propertyType: searchParams.get("propertyType"),
+            operationType: searchParams.get("operationType"),
+            zone: searchParams.get("zone"),
+            local: searchParams.get("local"),
+        };
+
+        // Actualizar el estado con los valores de los parámetros, si existen
+        setFilters((prevState) => ({
+            ...prevState,
+            ...params,
+        }));
+    };
+
     return {
         properties,
         loading,
@@ -118,5 +136,6 @@ export default function useProperties() {
         operationTypeOptions,
         zoneOptions,
         localityOptions,
+        getFiltersFromURL
     };
 }

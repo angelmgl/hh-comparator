@@ -8,21 +8,30 @@ import { FiX } from "react-icons/fi";
 import "./App.css";
 import Snackbar from "./components/Snackbar";
 
-function generateURL(items) {
+function generateURL(currentProperties, filters) {
     const APP_URL = "http://localhost:5173";
+
+    // Fusionar currentProperties y filters en un solo objeto
+    const combinedItems = { ...currentProperties, ...filters };
+
     // Crear un array con los pares clave-valor que no sean null
-    const queryParams = Object.entries(items).reduce((acc, [key, value]) => {
-        if (value !== null) {
-            acc.push(`${encodeURIComponent(key)}=${encodeURIComponent(value)}`);
-        }
-        return acc;
-    }, []);
+    const queryParams = Object.entries(combinedItems).reduce(
+        (acc, [key, value]) => {
+            if (value !== null) {
+                acc.push(
+                    `${encodeURIComponent(key)}=${encodeURIComponent(value)}`
+                );
+            }
+            return acc;
+        },
+        []
+    );
 
     // Unir los pares clave-valor con '&' y concatenarlos a la URL base
     const urlWithParams = `${APP_URL}/?${queryParams.join("&")}`;
 
     // Copiar la URL al portapapeles
-    navigator.clipboard.writeText(urlWithParams);
+    navigator.clipboard.writeText(urlWithParams)
 }
 
 export default function App() {
@@ -30,11 +39,13 @@ export default function App() {
         properties,
         filteredProperties,
         filters,
+        loading,
         changeFilters,
         operationTypeOptions,
         propertyTypeOptions,
         zoneOptions,
         localityOptions,
+        getFiltersFromURL
     } = useProperties();
 
     const {
@@ -51,6 +62,7 @@ export default function App() {
         mostValuableRentPerM2Build,
         mostValuableSalePerM2Land,
         mostValuableRentPerM2Land,
+        getPropertiesFromURL,
     } = useComparator(properties, filters);
 
     useEffect(() => {
@@ -62,15 +74,9 @@ export default function App() {
         });
     }, [filters, setCurrentProperties]);
 
-    const [isLoading, setIsLoading] = useState(true);
     const [showSnackbar, setShowSnackbar] = useState(false);
     const [showCards, setShowCards] = useState(1);
     const [showAddButton, setShowAddButton] = useState(true);
-
-    // renderizar el loader
-    useEffect(() => {
-        setTimeout(() => setIsLoading(false), 2500);
-    }, []);
 
     // efecto para saber cuantas cards mostrar
     useEffect(() => {
@@ -96,6 +102,16 @@ export default function App() {
         }
     }, [showSnackbar]);
 
+    // efecto para recuperar las propiedades de la URL
+    useEffect(() => {
+        if (!loading) {
+            setTimeout(() => {
+                getFiltersFromURL();
+                setTimeout(() => getPropertiesFromURL(), 150);
+            }, 300);
+        }
+    }, [loading]);
+
     const getCurrentPropertyData = (key) => {
         return properties.filter(
             (property) => property.id == currentProperties[key]
@@ -113,12 +129,12 @@ export default function App() {
 
     return (
         <main className="py-12 md:py-20">
-            {isLoading && (
+            {loading && (
                 <div className="w-full h-96 flex items-center justify-center">
                     <span className="loader"></span>
                 </div>
             )}
-            {!isLoading && (
+            {!loading && (
                 <div className="custom-container">
                     <Accordeon
                         filters={filters}
@@ -309,7 +325,7 @@ export default function App() {
                         <button
                             className="text-white uppercase bg-black hover:bg-gray-700 px-4 py-2 font-medium text-sm"
                             onClick={() => {
-                                generateURL(currentProperties);
+                                generateURL(currentProperties, filters);
                                 setShowSnackbar(true);
                             }}
                         >
@@ -318,7 +334,12 @@ export default function App() {
                     </div>
                 </div>
             )}
-            {showSnackbar && <Snackbar text="URL copiada al portapapeles!" close={() => setShowSnackbar(false)} />}
+            {showSnackbar && (
+                <Snackbar
+                    text="URL copiada al portapapeles!"
+                    close={() => setShowSnackbar(false)}
+                />
+            )}
         </main>
     );
 }

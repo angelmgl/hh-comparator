@@ -39,31 +39,6 @@ export default function useComparator(properties, filters) {
     const [mostValuableRentPerM2Land, setMostValuableRentPerM2Land] =
         useState(null);
 
-    // efecto para recuperar las propiedades de la URL si existen
-    useEffect(() => {
-        // Crear un objeto URL usando window.location para acceder a la URL actual
-        const url = new URL(window.location);
-
-        // Utilizar URLSearchParams para obtener los parámetros de la URL
-        const searchParams = new URLSearchParams(url.search);
-
-        // Crear un objeto temporal para almacenar los parámetros encontrados
-        const params = {
-            first: searchParams.get("first"),
-            second: searchParams.get("second"),
-            third: searchParams.get("third"),
-            fourth: searchParams.get("fourth"),
-        };
-
-        // Actualizar el estado con los valores de los parámetros, si existen
-        setTimeout(() => {
-            setCurrentProperties((prevState) => ({
-                ...prevState,
-                ...params,
-            }));
-        }, 2500);
-    }, []);
-
     // efecto para calcular todos los valores destacados al cambiar las propiedades seleccionadas o los filtros
     useEffect(() => {
         setCheapestSale(
@@ -173,6 +148,28 @@ export default function useComparator(properties, filters) {
         }
     }, [currentProperties]);
 
+    const getPropertiesFromURL = () => {
+        // Crear un objeto URL usando window.location para acceder a la URL actual
+        const url = new URL(window.location);
+
+        // Utilizar URLSearchParams para obtener los parámetros de la URL
+        const searchParams = new URLSearchParams(url.search);
+
+        // Crear un objeto temporal para almacenar los parámetros encontrados
+        const params = {
+            first: searchParams.get("first"),
+            second: searchParams.get("second"),
+            third: searchParams.get("third"),
+            fourth: searchParams.get("fourth"),
+        };
+
+        // Actualizar el estado con los valores de los parámetros, si existen
+        setCurrentProperties((prevState) => ({
+            ...prevState,
+            ...params,
+        }));
+    };
+
     return {
         currentProperties,
         setCurrentProperties,
@@ -188,5 +185,6 @@ export default function useComparator(properties, filters) {
         mostValuableSalePerM2Land,
         mostValuableRentPerM2Land,
         hasTwoOrMoreValues,
+        getPropertiesFromURL
     };
 }
