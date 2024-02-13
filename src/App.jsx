@@ -5,7 +5,9 @@ import SelectInput from "./components/SelectInput";
 import useProperties from "./hooks/useProperties";
 import useComparator from "./hooks/useComparator";
 import "./App.css";
-import { getClassNames } from "./helpers";
+// import { getClassNames } from "./helpers";
+// getClassNames(
+//     !filters.propertyType || !filters.operationType,
 import html2pdf from "html2pdf.js";
 
 function downloadPDF() {
@@ -87,11 +89,7 @@ export default function App() {
                 />
                 <div
                     id="content"
-                    className={getClassNames(
-                        !filters.propertyType || !filters.operationType,
-                        "not-yet",
-                        "my-12 md:my-20 relative"
-                    )}
+                    className="my-12 md:my-20 relative"
                 >
                     <h2 className="text-3xl font-semibold">Inmuebles</h2>
                     <div className="mt-4 grid grid-cols-4 gap-4">
@@ -103,30 +101,30 @@ export default function App() {
                             handleChange={changeCurrentProperty}
                             field="first"
                         />
-                        <SelectInput
+                        { currentProperties.second && <SelectInput
                             label="Propiedad 2"
                             placeholder="Selecciona una propiedad..."
                             options={filteredProperties}
                             defaultValue={currentProperties.second}
                             handleChange={changeCurrentProperty}
                             field="second"
-                        />
-                        <SelectInput
+                        /> }
+                        { currentProperties.third && <SelectInput
                             label="Propiedad 3"
                             placeholder="Selecciona una propiedad..."
                             options={filteredProperties}
                             defaultValue={currentProperties.third}
                             handleChange={changeCurrentProperty}
                             field="third"
-                        />
-                        <SelectInput
+                        /> }
+                        { currentProperties.fourth && <SelectInput
                             label="Propiedad 4"
                             placeholder="Selecciona una propiedad..."
                             options={filteredProperties}
                             defaultValue={currentProperties.fourth}
                             handleChange={changeCurrentProperty}
                             field="fourth"
-                        />
+                        />}
                     </div>
                     <div className="mt-4 grid grid-cols-4 gap-4">
                         {currentProperties.first && <Card

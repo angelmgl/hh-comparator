@@ -29,6 +29,15 @@ export default function useProperties() {
     const [zoneOptions, setZoneOptions] = useState([]);
     const [localityOptions, setLocalityOptions] = useState([]);
 
+    const changeFilters = (key, value) => {
+        setFilters((prev) => {
+            return {
+                ...prev,
+                [key]: value,
+            };
+        });
+    };
+
     useEffect(() => {
         const fetchProperties = async () => {
             try {
@@ -60,8 +69,14 @@ export default function useProperties() {
     }, [properties, filters]);
 
     useEffect(() => {
-        setOperationTypeOptions(getUniqueOperationTypes(properties));
-        setPropertyTypeOptions(getUniquePropertyTypes(properties));
+        const uniqueOperationTypes = getUniqueOperationTypes(properties)
+        setOperationTypeOptions(uniqueOperationTypes);
+        changeFilters('operationType', uniqueOperationTypes[0]?.value)
+
+        const uniquePropertyTypes = getUniquePropertyTypes(properties)
+        setPropertyTypeOptions(uniquePropertyTypes);
+        changeFilters('propertyType', uniquePropertyTypes[0]?.value)
+
         setZoneOptions(getUniqueZones(properties));
         setLocalities(getUniqueLocalities(properties));
     }, [properties]);
@@ -86,15 +101,6 @@ export default function useProperties() {
             setLocalityOptions([]);
         }
     }, [filters.zone, localities]);
-
-    const changeFilters = (key, value) => {
-        setFilters((prev) => {
-            return {
-                ...prev,
-                [key]: value,
-            };
-        });
-    };
 
     return {
         properties,

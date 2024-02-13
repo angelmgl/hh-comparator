@@ -31,6 +31,7 @@ export default function Accordeon({
                         defaultValue={filters.propertyType}
                         handleChange={changeFilters}
                         field="propertyType"
+                        required={true}
                     />
                     <SelectInput
                         label="Tipo de operación *"
@@ -39,6 +40,7 @@ export default function Accordeon({
                         defaultValue={filters.operationType}
                         handleChange={changeFilters}
                         field="operationType"
+                        required={true}
                     />
                     <SelectInput
                         label="Zona"

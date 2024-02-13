@@ -5,6 +5,7 @@ export default function SelectInput({
     defaultValue,
     handleChange,
     field,
+    required = false
 }) {
     const handleSelectChange = (event) => {
         handleChange(field, event.target.value);
@@ -18,7 +19,7 @@ export default function SelectInput({
                 className="w-full py-1 px-2 border border-gray-300 rounded"
                 onChange={handleSelectChange}
             >
-                <option value="">{placeholder}</option>
+                <option value="" disabled={required}>{placeholder}</option>
                 {options?.map((option) => (
                     <option key={option.value} value={option.value}>
                         {option.label}
