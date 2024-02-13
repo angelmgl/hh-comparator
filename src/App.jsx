@@ -4,12 +4,12 @@ import Card from "./components/Card";
 import SelectInput from "./components/SelectInput";
 import useProperties from "./hooks/useProperties";
 import useComparator from "./hooks/useComparator";
-import { FiX } from "react-icons/fi";
+import { FiX, FiPlus } from "react-icons/fi";
 import "./App.css";
 import Snackbar from "./components/Snackbar";
 
 function generateURL(currentProperties, filters) {
-    const APP_URL = "http://localhost:5173";
+    const APP_URL = "https://homehunters.com.py/comparador";
 
     // Fusionar currentProperties y filters en un solo objeto
     const combinedItems = { ...currentProperties, ...filters };
@@ -107,8 +107,8 @@ export default function App() {
         if (!loading) {
             setTimeout(() => {
                 getFiltersFromURL();
-                setTimeout(() => getPropertiesFromURL(), 150);
-            }, 300);
+                setTimeout(() => getPropertiesFromURL(), 300);
+            }, 100);
         }
     }, [loading]);
 
@@ -313,9 +313,9 @@ export default function App() {
                                         onClick={() => {
                                             setShowCards(showCards + 1);
                                         }}
-                                        className="h-16 w-16 pb-3 flex items-center justify-center leading-none rounded-full bg-black text-white text-6xl hover:bg-gray-700"
+                                        className="h-16 w-16 flex items-center justify-center leading-none rounded-full bg-black text-white hover:bg-gray-700"
                                     >
-                                        +
+                                        <FiPlus size={35} />
                                     </button>
                                 </div>
                             )}

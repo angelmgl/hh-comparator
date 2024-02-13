@@ -42,7 +42,7 @@ export default function useProperties() {
                     "https://homehunters.com.py/wp-json/comparador/v1/propiedades"
                 );
                 const result = await response.json();
-                const mapped = mapProperties(result)
+                const mapped = mapProperties(result);
                 setProperties(mapped);
                 setLoading(false);
             } catch (error) {
@@ -68,13 +68,13 @@ export default function useProperties() {
 
     // efecto para setear las opciones de los filtros
     useEffect(() => {
-        const uniqueOperationTypes = getUniqueOperationTypes(properties)
+        const uniqueOperationTypes = getUniqueOperationTypes(properties);
         setOperationTypeOptions(uniqueOperationTypes);
-        changeFilters('operationType', uniqueOperationTypes[0]?.value)
+        changeFilters("operationType", operationTypeOptions[0]?.value);
 
-        const uniquePropertyTypes = getUniquePropertyTypes(properties)
+        const uniquePropertyTypes = getUniquePropertyTypes(properties);
         setPropertyTypeOptions(uniquePropertyTypes);
-        changeFilters('propertyType', uniquePropertyTypes[0]?.value)
+        changeFilters("propertyType", propertyTypeOptions[0]?.value);
 
         setZoneOptions(getUniqueZones(properties));
         setLocalities(getUniqueLocalities(properties));
@@ -109,19 +109,26 @@ export default function useProperties() {
         // Utilizar URLSearchParams para obtener los parámetros de la URL
         const searchParams = new URLSearchParams(url.search);
 
-        // Crear un objeto temporal para almacenar los parámetros encontrados
-        const params = {
-            propertyType: searchParams.get("propertyType"),
-            operationType: searchParams.get("operationType"),
-            zone: searchParams.get("zone"),
-            local: searchParams.get("local"),
-        };
+        const propertyType = searchParams.get("propertyType");
+        const operationType = searchParams.get("operationType");
+        const zone = searchParams.get("zone");
+        const local = searchParams.get("local");
 
-        // Actualizar el estado con los valores de los parámetros, si existen
-        setFilters((prevState) => ({
-            ...prevState,
-            ...params,
-        }));
+        if (propertyType && operationType) {
+            // Crear un objeto temporal para almacenar los parámetros encontrados
+            const params = {
+                propertyType: propertyType,
+                operationType: operationType,
+                zone: zone,
+                local: local,
+            };
+
+            // Actualizar el estado con los valores de los parámetros, si existen
+            setFilters((prevState) => ({
+                ...prevState,
+                ...params,
+            }));
+        }
     };
 
     return {
@@ -136,6 +143,6 @@ export default function useProperties() {
         operationTypeOptions,
         zoneOptions,
         localityOptions,
-        getFiltersFromURL
+        getFiltersFromURL,
     };
 }
