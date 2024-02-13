@@ -38,6 +38,7 @@ export default function useProperties() {
         });
     };
 
+    // efecto para traer las propiedades de la API
     useEffect(() => {
         const fetchProperties = async () => {
             try {
@@ -57,6 +58,7 @@ export default function useProperties() {
         fetchProperties();
     }, []);
 
+    // efecto para filtrar las propiedades cada vez que cambian los filtros
     useEffect(() => {
         const filtered = properties.filter((property) =>
             matchesFilter(property, filters)
@@ -68,6 +70,7 @@ export default function useProperties() {
         setFilteredProperties(options);
     }, [properties, filters]);
 
+    // efecto para setear las opciones de los filtros
     useEffect(() => {
         const uniqueOperationTypes = getUniqueOperationTypes(properties)
         setOperationTypeOptions(uniqueOperationTypes);
@@ -81,6 +84,7 @@ export default function useProperties() {
         setLocalities(getUniqueLocalities(properties));
     }, [properties]);
 
+    // efecto para mostrar las localidades según la zona
     useEffect(() => {
         if (filters.zone) {
             setLocalityOptions(

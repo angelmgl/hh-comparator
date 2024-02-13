@@ -1,13 +1,10 @@
 /* eslint-disable react/prop-types */
 import { CiBadgeDollar, CiLocationOn, CiRuler, CiGrid41 } from "react-icons/ci";
-import { FiX } from "react-icons/fi";
 import Field from "./Field";
 import ShowAmenities from "./ShowAmenities";
 
 export default function Card({
     property,
-    handleChange,
-    field,
     bestProperties,
     filters,
 }) {
@@ -36,12 +33,6 @@ export default function Card({
                         backgroundImage: `url(${property.thumbnail})`,
                     }}
                 >
-                    <span
-                        className="flex justify-center items-center h-6 w-6 bg-red-600 hover:bg-red-700 text-white cursor-pointer"
-                        onClick={() => handleChange(field, null)}
-                    >
-                        <FiX />
-                    </span>
                     <span className="text-xs uppercase absolute top-0 right-0 py-1 px-3 bg-black text-white">
                         {property.operationType}
                     </span>

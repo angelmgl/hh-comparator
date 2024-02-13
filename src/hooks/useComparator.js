@@ -33,7 +33,32 @@ export default function useComparator(properties, filters) {
     const [mostValuableSalePerM2Land, setMostValuableSalePerM2Land] = useState(null);
     const [mostValuableRentPerM2Land, setMostValuableRentPerM2Land] = useState(null);
 
+    // efecto para recuperar las propiedades de la URL si existen
+    useEffect(() => {
+        // Crear un objeto URL usando window.location para acceder a la URL actual
+        const url = new URL(window.location);
 
+        // Utilizar URLSearchParams para obtener los parámetros de la URL
+        const searchParams = new URLSearchParams(url.search);
+
+        // Crear un objeto temporal para almacenar los parámetros encontrados
+        const params = {
+            first: searchParams.get('first'),
+            second: searchParams.get('second'),
+            third: searchParams.get('third'),
+            fourth: searchParams.get('fourth'),
+        };
+
+        // Actualizar el estado con los valores de los parámetros, si existen
+        setTimeout(() => {
+            setCurrentProperties(prevState => ({
+                ...prevState,
+                ...params,
+            }));
+        }, 2000)
+    }, []);
+
+    // efecto para calcular todos los valores destacados al cambiar las propiedades seleccionadas o los filtros
     useEffect(() => {
         setCheapestSale(getTheCheapestSale(hasTwoOrMoreValues, properties, currentProperties, filters.operationType));
         setCheapestRent(getTheCheapestRent(hasTwoOrMoreValues, properties, currentProperties, filters.operationType));
@@ -48,6 +73,7 @@ export default function useComparator(properties, filters) {
         setMostValuableRentPerM2Land(getTheMostValuableRentPerM2Land(hasTwoOrMoreValues, properties, currentProperties));
     }, [currentProperties, hasTwoOrMoreValues, properties, filters])
 
+    // efecto para saber si hay 2 o más propiedades
     useEffect(() => {
         const values = Object.values(currentProperties);
         const countNonNull = values.filter(value => value !== null).length;
