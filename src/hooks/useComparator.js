@@ -61,7 +61,7 @@ export default function useComparator(properties, filters) {
                 ...prevState,
                 ...params,
             }));
-        }, 2000);
+        }, 2500);
     }, []);
 
     // efecto para calcular todos los valores destacados al cambiar las propiedades seleccionadas o los filtros

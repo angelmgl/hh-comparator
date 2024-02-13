@@ -6,6 +6,7 @@ import useProperties from "./hooks/useProperties";
 import useComparator from "./hooks/useComparator";
 import { FiX } from "react-icons/fi";
 import "./App.css";
+import Snackbar from "./components/Snackbar";
 
 function generateURL(items) {
     const APP_URL = "http://localhost:5173";
@@ -21,14 +22,7 @@ function generateURL(items) {
     const urlWithParams = `${APP_URL}/?${queryParams.join("&")}`;
 
     // Copiar la URL al portapapeles
-    navigator.clipboard
-        .writeText(urlWithParams)
-        .then(() => {
-            console.log("URL copiada al portapapeles con éxito!");
-        })
-        .catch((err) => {
-            console.error("Error al copiar la URL al portapapeles: ", err);
-        });
+    navigator.clipboard.writeText(urlWithParams);
 }
 
 export default function App() {
@@ -69,12 +63,13 @@ export default function App() {
     }, [filters, setCurrentProperties]);
 
     const [isLoading, setIsLoading] = useState(true);
+    const [showSnackbar, setShowSnackbar] = useState(false);
     const [showCards, setShowCards] = useState(1);
     const [showAddButton, setShowAddButton] = useState(true);
 
     // renderizar el loader
     useEffect(() => {
-        setTimeout(() => setIsLoading(false), 2000);
+        setTimeout(() => setIsLoading(false), 2500);
     }, []);
 
     // efecto para saber cuantas cards mostrar
@@ -90,6 +85,16 @@ export default function App() {
         () => setShowAddButton(showCards < 4),
         [showCards, currentProperties]
     );
+
+    // efecto para cerrar el snackbar automáticamente luego de 2 segundos
+    useEffect(() => {
+        if (showSnackbar) {
+            const timer = setTimeout(() => setShowSnackbar(false), 2000);
+
+            // Función de limpieza que cancela el temporizador
+            return () => clearTimeout(timer);
+        }
+    }, [showSnackbar]);
 
     const getCurrentPropertyData = (key) => {
         return properties.filter(
@@ -303,13 +308,17 @@ export default function App() {
                     <div>
                         <button
                             className="text-white uppercase bg-black hover:bg-gray-700 px-4 py-2 font-medium text-sm"
-                            onClick={() => generateURL(currentProperties)}
+                            onClick={() => {
+                                generateURL(currentProperties);
+                                setShowSnackbar(true);
+                            }}
                         >
                             Compartir
                         </button>
                     </div>
                 </div>
             )}
+            {showSnackbar && <Snackbar text="URL copiada al portapapeles!" close={() => setShowSnackbar(false)} />}
         </main>
     );
 }
