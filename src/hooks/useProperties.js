@@ -60,7 +60,7 @@ export default function useProperties() {
             matchesFilter(property, filters)
         );
         const options = filtered.map((property) => ({
-            label: property.title,
+            label: `${property.vendedor_code}${property.code} - ${property.title}`,
             value: property.id,
         }));
         setFilteredProperties(options);

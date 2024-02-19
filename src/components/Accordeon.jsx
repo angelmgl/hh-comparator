@@ -23,7 +23,7 @@ export default function Accordeon({
                 </span>
             </div>
             {isOpen && (
-                <div className="border-l border-r border-b border-gray-300 p-4 rounded mt-4 grid grid-cols-4 gap-4">
+                <div className="border-l border-r border-b border-gray-300 p-4 rounded mt-4  md:grid md:grid-cols-4 gap-4">
                     <SelectInput
                         label="Tipo de propiedad *"
                         placeholder="Selecciona un tipo de propiedad..."

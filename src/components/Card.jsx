@@ -3,11 +3,7 @@ import { CiBadgeDollar, CiLocationOn, CiRuler, CiGrid41 } from "react-icons/ci";
 import Field from "./Field";
 import ShowAmenities from "./ShowAmenities";
 
-export default function Card({
-    property,
-    bestProperties,
-    filters,
-}) {
+export default function Card({ property, bestProperties, filters }) {
     const {
         cheapestSale,
         cheapestRent,
@@ -26,7 +22,7 @@ export default function Card({
 
     if (property) {
         return (
-            <div className="border border-gray-300 rounded-lg overflow-hidden">
+            <div className="border border-gray-300 rounded-lg overflow-hidden my-4">
                 <div
                     className="min-h-[220px] bg-center bg-cover bg-no-repeat relative"
                     style={{
@@ -38,10 +34,10 @@ export default function Card({
                     </span>
                 </div>
                 <div className="p-3">
-                    <h2 className="text-xl font-semibold mb-6">
+                    <h2 className="text-xl font-semibold mb-6 md:h-[120px]">
                         {property.title}
                     </h2>
-
+                    <hr className="mb-4" />
                     {/* precio venta */}
                     {(operationType === "Venta" ||
                         operationType === "Venta/Alquiler") &&
@@ -61,7 +57,8 @@ export default function Card({
                             <Field condition={cheapestRent === property.id}>
                                 <CiBadgeDollar />
                                 <span className="mx-2">
-                                    USD {property.rentPriceUSD.toLocaleString()} al mes
+                                    USD {property.rentPriceUSD.toLocaleString()}{" "}
+                                    al mes
                                 </span>
                             </Field>
                         )}
@@ -219,18 +216,15 @@ export default function Card({
                                 </span>
                             </Field>
                         )}
-                        <hr className="mt-4" />
                         <ShowAmenities title="Amenities" items={property.amenities} />
-                        <hr className="mt-4" />
                         <ShowAmenities title="Servicios" items={property.services} />
-                        <hr className="mt-4" />
                         <ShowAmenities title="Conexiones" items={property.connections} />
                 </div>
             </div>
         );
     } else {
         return (
-            <div className="min-h-[300px] border border-gray-300 border-dashed rounded-lg overflow-hidden flex items-center justify-center">
+            <div className="min-h-[300px] border border-gray-300 border-dashed rounded-lg overflow-hidden flex items-center justify-center my-4">
                 <h2 className="text-3xl font-semibold text-center text-gray-300">
                     Agrega una propiedad
                 </h2>

@@ -30,6 +30,7 @@ export function mapProperties(properties) {
             title: item.title,
             thumbnail: item.thumbnail,
             code: item.codigo,
+            vendedor_code: item.vendedor_code,
             zone: item.zona,
             locality: {
                 central: item.ciudad_central,
