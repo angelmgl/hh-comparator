@@ -6,14 +6,15 @@ function classNames(condition, classesIfTrue, defaultClasses = "") {
         : defaultClasses;
 }
 
-export default function Field({children, condition}) {
+export default function Field({children, condition, tooltip}) {
     return (
         <p
             className={classNames(
                 condition,
                 "bg-[#397F68] text-white rounded",
-                "mt-2 px-2 py-1 flex items-center leading-4"
+                "mt-2 px-2 py-1 flex items-center leading-4 text-sm single-line-text"
             )}
+            title={condition ? tooltip : ''}
         >
             { children }
             {condition && <FiChevronsUp className="mr-1" />}

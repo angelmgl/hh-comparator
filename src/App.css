@@ -7,11 +7,18 @@
     left: 0;
     font-size: 22px;
     font-weight: 600;
-    background: rgba(240,35,0, 0.35);
+    background: rgba(240, 35, 0, 0.35);
     border: 3px dashed tomato;
     border-radius: 10px;
     color: white;
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.single-line-text span {
+    white-space: nowrap; /* Asegura que el texto se muestre en una sola línea */
+    overflow: hidden; /* Oculta el contenido que sobrepasa el contenedor */
+    text-overflow: ellipsis; /* Añade puntos suspensivos al final del texto visible */
+    width: 100%; /* o un valor específico, dependiendo de tu diseño */
 }
