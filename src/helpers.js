@@ -236,6 +236,8 @@ export function getUniqueLocalities(properties) {
 }
 
 export function matchesFilter(property, filters) {
+    if (!filters.propertyType || !filters.operationType) return false;
+
     if (
         filters.propertyType &&
         property.propertyType !== filters.propertyType
