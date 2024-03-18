@@ -27,7 +27,7 @@ export function mapProperties(properties) {
 
         return {
             id: item.ID,
-            title: item.title,
+            title: item.comparator_name || item.title,
             thumbnail: item.thumbnail,
             code: item.codigo,
             vendedor_code: item.vendedor_code,
