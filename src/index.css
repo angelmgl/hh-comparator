@@ -26,4 +26,16 @@
     100% {
         transform: rotate(360deg);
     }
-    } 
+} 
+
+.tooltip::after {
+    content: "";
+    height: 0;
+    width: 0;
+    position: absolute;
+    bottom: -14px;
+    left: 40px;
+    border-top: 15px solid #e2e2e2;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+}
