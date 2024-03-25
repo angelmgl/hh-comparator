@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { FiChevronsUp } from "react-icons/fi";
 
 function classNames(condition, classesIfTrue, defaultClasses = "") {
@@ -9,6 +9,12 @@ function classNames(condition, classesIfTrue, defaultClasses = "") {
 
 export default function Field({children, condition, tooltip}) {
     const [isTooltipVisible, setIsTooltipVisible] = useState(false);
+
+    useEffect(() => {
+        setTimeout(() =>{
+            setIsTooltipVisible(false);
+        }, 2000);
+    }, [isTooltipVisible]);
 
     return (
     <div className="relative">
